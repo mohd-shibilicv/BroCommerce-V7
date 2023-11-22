@@ -79,7 +79,7 @@ Category List
             class="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 ">
             {% if product.on_sale or product.category.on_sale %}
             {% if product.discount_price %}
-            <div class="t-0 absolute left-3 z-10">
+            <div class="t-0 absolute left-4 z-10">
                 
                 {% if product.on_sale %}
                 <p class="flex h-5 w-5 items-center justify-center rounded-full bg-gray-500 p-4 text-xs text-white">{{ product.product_offer.all.0.discount }}%</p>

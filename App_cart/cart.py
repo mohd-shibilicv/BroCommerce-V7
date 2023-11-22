@@ -223,10 +223,8 @@ class Cart:
         Clear the session
         """
         del self.session[settings.BASKET_SESSION_ID]
-        if "address" in self.session:
+        if self.session["address"]:
             del self.session["address"]
-        if "purchase" in self.session:
+        if self.session["purchase"]:
             del self.session["purchase"]
-        if "coupon_id" in self.coupon:
-            del self.session["coupon_id"]
         self.save()

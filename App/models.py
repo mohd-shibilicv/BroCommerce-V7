@@ -77,10 +77,9 @@ class CategoryOffers(models.Model):
                     new_product_discount_price = product.regular_price * (
                         1 - Decimal(self.discount) / 100
                     )
-                    if product.discount_price > new_product_discount_price:
-                        if product.discount_price != new_product_discount_price:
-                            product.discount_price = new_product_discount_price
-                            product.save()
+                    if product.discount_price != new_product_discount_price:
+                        product.discount_price = new_product_discount_price
+                        product.save()
 
         if not self.is_active or not self.category.on_sale or (self.valid_to and timezone.now() > self.valid_to):
             products = Product.objects.filter(category=self.category)
