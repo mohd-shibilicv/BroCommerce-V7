@@ -1,0 +1,109 @@
+{% extends 'shopadmin/shopadmin_base.html' %}
+
+{% load static %}
+
+{% block title %}
+Invoices | BroCommerce Admin
+{% endblock title %}
+
+{% block content %}
+<div x-data="setup()" :class="{ 'dark': isDark }">
+    <div
+        class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+        <!-- Header -->
+        {% include 'shopadmin/header.html' %}
+        <!-- Sidebar -->
+        {% include 'shopadmin/sidebar.html' %}
+
+        <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+
+            <div class="grid grid-cols-1 lg:grid-cols-1 p-4 gap-4">
+
+                <!-- Orders Table -->
+            <div class="mt-4 mx-4">
+                <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                    <div class="w-full overflow-x-auto">
+                        <div class="flex flex-wrap px-4 py-2 bg-gray-200 dark:bg-gray-900">
+                            <div class="relative w-full max-w-full flex-grow flex-1">
+                                <h3 class="font-semibold text-base text-2xl text-gray-800 dark:text-white">Invoices</h3>
+                            </div>
+                        </div>
+                        <table class="w-full">
+                            <thead>
+                                <tr
+                                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                    <th class="px-4 py-3">Invoice No.</th>
+                                    <th class="px-4 py-3">Order No.</th>
+                                    <th class="px-4 py-3">Customer</th>
+                                    <th class="px-4 py-3">Issued date</th>
+                                    <th class="px-4 py-3">Due date</th>
+                                    <th class="px-4 py-3">Amount</th>
+                                    <th class="px-4 py-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                
+                                {% for invoice in invoices %}
+                                <tr
+                                    class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+                                    <td class="px-4 py-3 text-sm">{{ invoice.invoice_number }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ invoice.order.order_key }}</td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center text-sm">
+                                            <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                                <img class="object-cover w-full h-full rounded-full"
+                                                src="{{ invoice.customer.profile.url }}"
+                                                alt="User Profile" loading="lazy" />
+                                                <div class="absolute inset-0 rounded-full shadow-inner"
+                                                aria-hidden="true"></div>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold">{{ invoice.customer.name }}</p>
+                                                <p class="text-xs text-gray-600 dark:text-gray-400">{{ invoice.customer.email }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">{{ invoice.issued_date|date:'F d, Y' }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ invoice.due_date|date:'F d, Y' }}</td>
+                                    <td class="px-4 py-3 text-sm">$ {{ invoice.total_amount }}</td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <a href="{% url 'orders:invoice_details' invoice.id %}" class="font-medium text-blue-600 dark:text-blue-500 mr-2 hover:underline">View</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Orders Table -->
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const setup = () => {
+        const getTheme = () => {
+            if (window.localStorage.getItem('dark')) {
+                return JSON.parse(window.localStorage.getItem('dark'))
+            }
+            return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+
+        const setTheme = (value) => {
+            window.localStorage.setItem('dark', value)
+        }
+
+        return {
+            loading: true,
+            isDark: getTheme(),
+            toggleTheme() {
+                this.isDark = !this.isDark
+                setTheme(this.isDark)
+            },
+        }
+    }
+</script>
+{% endblock content %}

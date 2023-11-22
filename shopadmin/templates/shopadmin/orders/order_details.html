@@ -1,0 +1,215 @@
+{% extends 'shopadmin/shopadmin_base.html' %}
+
+{% load tailwind_filters %}
+
+{% load static %}
+
+{% block title %}
+Order Details | BroCommerce Admin
+{% endblock title %}
+
+{% block content %}
+<div x-data="setup()" :class="{ 'dark': isDark }">
+    <div
+        class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+        <!-- Header -->
+        {% include 'shopadmin/header.html' %}
+        <!-- Sidebar -->
+        {% include 'shopadmin/sidebar.html' %}
+
+        <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+            <div class="container w-full bg-white dark:bg-gray-700 py-5">
+                <div class="w-full bg-white dark:text-white dark:bg-gray-700 border-t border-b rounded-xl border-gray-200 dark:border-gray-700 px-5 py-10 text-gray-800">
+                    <div class="-mx-3 md:flex items-start">
+                        <div class="px-3 md:w-7/12 lg:pr-10">
+            
+                            {% for item in order.items.all %}
+                            <div class="w-full mx-auto text-gray-800 font-light mb-6 pb-6">
+                                <a href="{{ item.product.get_absolute_url }}">
+                                    <div class="w-full flex items-center">
+                                        <div class="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
+                                            <img src="{{ item.product.cover_image.url }}"
+                                                alt="Order Item {{ forloop.counter }}">
+                                        </div>
+                                        <div class="flex-grow pl-3">
+                                            <h6 class="font-semibold uppercase text-gray-600 dark:text-white">{{ item.product.title }}</h6>
+                                            <p class="text-gray-700"></p>
+                                        </div>
+                                        <div>
+                                            <span class="font-semibold text-gray-600 dark:text-white text-lg">${{ item.price }} x {{ item.quantity }}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            {% endfor %}
+                            <p class="border-b border-gray-200 mb-5"></p>
+            
+                            <div class="mb-6 pb-6 border-b border-gray-200 text-gray-800 dark:text-white">
+                                <div class="w-full flex mb-3 items-center">
+                                    <div class="flex-grow">
+                                        <span class="">Subtotal</span>
+                                    </div>
+                                    <div class="pl-3">
+                                        <span class="font-semibold">${{ order.subtotal }}</span>
+                                        {% if order.coupon %}({{ order.coupon.code }} - {{ order.coupon.discount }}%){% endif %}
+                                    </div>
+                                    <!-- {% if order.coupon %}
+                                    <div class="flex-grow">
+                                        <span class="text-gray-600">New Subtotal with ({{ order.coupon.discount }}% discount)</span>
+                                    </div>
+                                    <div class="pl-3">
+                                        <span class="font-semibold">$ <span id="subtotal">{{ order.total_paid|floatformat:'2' }}</span>
+                                    </div>
+                                    {% else %} -->
+                                    
+                                    <!-- {% endif %} -->
+                                </div>
+                                <div class="w-full flex items-center mb-3">
+                                    <div class="flex-grow">
+                                        <span class="">Shipping</span>
+                                    </div>
+                                    <div class="pl-3">
+                                        <span class="font-semibold">$ {{ order.delivery_price }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-full flex items-center">
+                                    <div class="flex-grow">
+                                        <span class="">Taxes (VAT)</span>
+                                    </div>
+                                    <div class="pl-3">
+                                        <span class="font-semibold">$ 2.99</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-6 pb-6 border-b border-gray-200 md:border-none text-gray-800 dark:text-white text-xl">
+                                <div class="w-full flex items justify-end">
+                                    <div class="flex-grow">
+                                        <span class="">Total Paid</span>
+                                    </div>
+                                    <div class="pl-3">
+                                        <span class="font-semibold text-gray-400 text-sm">USD</span> <span
+                                            class="font-semibold">$ {{ order.total_paid }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-3 md:w-5/12">
+                            <div
+                                class="w-full mx-auto rounded-lg bg-white dark:bg-gray-700 border border-gray-200 p-3 text-gray-800 dark:text-white font-light mb-6">
+                                <div class="w-full flex mb-3 items-center">
+                                    <div class="w-32">
+                                        <span class="text-gray-600 dark:text-white font-semibold">Order Key</span>
+                                    </div>
+                                    <div class="flex-grow pl-3">
+                                        <span>{{ order.order_key }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-full flex mb-3 items-center">
+                                    <div class="w-32">
+                                        <span class="text-gray-600 dark:text-white font-semibold">Contact</span>
+                                    </div>
+                                    <div class="flex-grow pl-3">
+                                        <span>{{ order.full_name }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-full flex items-center mb-3">
+                                    <div class="w-32">
+                                        <span class="text-gray-600 dark:text-white font-semibold">Address Line 1</span>
+                                    </div>
+                                    <div class="flex-grow pl-3">
+                                        <span>{{ order.address1 }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-full flex items-center mb-3">
+                                    <div class="w-32">
+                                        <span class="text-gray-600 dark:text-white font-semibold">Address Line 2</span>
+                                    </div>
+                                    <div class="flex-grow pl-3">
+                                        <span>{{ order.address2 }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-full flex items-center mb-3">
+                                    <div class="w-32">
+                                        <span class="text-gray-600 dark:text-white font-semibold">Postal Code</span>
+                                    </div>
+                                    <div class="flex-grow pl-3">
+                                        <span>{{ order.postal_code }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-full flex items-center mb-3">
+                                    <div class="w-32">
+                                        <span class="text-gray-600 dark:text-white font-semibold">Ordered at</span>
+                                    </div>
+                                    <div class="flex-grow pl-3">
+                                        <span>{{ order.created }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-full flex items-center mb-3">
+                                    <div class="w-32">
+                                        <span class="text-gray-600 dark:text-white font-semibold">Payment Option</span>
+                                    </div>
+                                    <div class="flex-grow pl-3">
+                                        <span>{{ order.payment_option|upper }}</span>
+                                    </div>
+                                </div>
+                                <div class="w-full flex items-center mb-3">
+                                    <div class="w-32">
+                                        <span class="text-gray-600 dark:text-white font-semibold">Order Status</span>
+                                    </div>
+                                    <div class="flex-grow pl-3">
+                                        <span>{{ order.order_status }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            {% if not order.order_status == 'Cancelled' %}
+                
+            <div class="container mx-auto p-6 bg-white dark:bg-gray-700">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="text-gray-800 bg-white dark:bg-gray-300 dark:text-white p-5 rounded-lg mt-5">
+                        {{ order_form|crispy }}
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-600 py-2 rounded-lg text-white font-semibold">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+<script>
+    const setup = () => {
+        const getTheme = () => {
+            if (window.localStorage.getItem('dark')) {
+                return JSON.parse(window.localStorage.getItem('dark'))
+            }
+            return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+
+        const setTheme = (value) => {
+            window.localStorage.setItem('dark', value)
+        }
+
+        return {
+            loading: true,
+            isDark: getTheme(),
+            toggleTheme() {
+                this.isDark = !this.isDark
+                setTheme(this.isDark)
+            },
+        }
+    }
+</script>
+{% endblock content %}

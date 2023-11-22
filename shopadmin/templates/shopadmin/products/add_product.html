@@ -1,0 +1,144 @@
+{% extends 'shopadmin/shopadmin_base.html' %}
+
+{% load tailwind_filters %}
+
+{% load static %}
+
+{% block title %}
+Add Product | BroCommerce Admin
+{% endblock title %}
+
+{% block content %}
+<div x-data="setup()" :class="{ 'dark': isDark }">
+    <div
+        class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+        <!-- Header -->
+        {% include 'shopadmin/header.html' %}
+        <!-- Sidebar -->
+        {% include 'shopadmin/sidebar.html' %}
+
+        <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+            <div class="container mx-auto p-6 dark:bg-gray-300">
+                
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <img id="ProductImagePreview" src="" alt="" style="max-width: 200px; max-height: 200px; margin: 0 auto;">
+                    <div>
+                        {{ product_form|crispy }}
+                    </div>
+                    <div>
+                        {{ spec_value_formset.management_form }}
+                        {% for form in spec_value_formset %}
+                        <div class="m-5 flex gap-6 p-3 text-gray-900">
+                            {{ form.id }}
+                            <div>
+                                {{ form.specification.label }}
+                                {{ form.specification }}
+                            </div>
+                            <div>
+                                {{ form.value.label }}
+                                {{ form.value }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                
+                    <!-- Image formset -->
+                    <div>
+                        {{ image_formset.management_form }}
+                        {% for form in image_formset %}
+                            <div class="bg-gray-100 text-gray-900 p-4 my-4 rounded-lg">
+                                <div class="flex flex-col gap-4">
+                                    {{ form.id }}
+                                    <div>
+                                        {{ form.image }}
+                                    </div>
+                                    <div>
+                                        {{ form.alt_text.label }}
+                                        {{ form.alt_text }}
+                                    </div>
+                                    <div>
+                                        {{ form.is_feature.label }}
+                                        {{ form.is_feature }}
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 mt-4">
+                                    <div>
+                                        {{ form.crop_left.label }}
+                                        {{ form.crop_left }}
+                                    </div>
+                                    <div>
+                                        {{ form.crop_upper.label }}
+                                        {{ form.crop_upper }}
+                                    </div>
+                                    <div>
+                                        {{ form.crop_right.label }}
+                                        {{ form.crop_right }}
+                                    </div>
+                                    <div>
+                                        {{ form.crop_lower.label }}
+                                        {{ form.crop_lower }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-600 py-2 rounded-lg text-white font-semibold">
+                            Add Product
+                        </button>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Function to update the image preview
+    function updateImagePreview() {
+        const input = document.getElementById('id_file');
+        const preview = document.getElementById('ProductImagePreview');
+        const file = input.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            };
+            
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = ""; // Clear the preview when no file is selected
+        }
+    }
+
+    // Add an event listener to the file input
+    document.getElementById('id_file').addEventListener('change', updateImagePreview);
+</script>
+<script>
+    const setup = () => {
+        const getTheme = () => {
+            if (window.localStorage.getItem('dark')) {
+                return JSON.parse(window.localStorage.getItem('dark'))
+            }
+            return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+
+        const setTheme = (value) => {
+            window.localStorage.setItem('dark', value)
+        }
+
+        return {
+            loading: true,
+            isDark: getTheme(),
+            toggleTheme() {
+                this.isDark = !this.isDark
+                setTheme(this.isDark)
+            },
+        }
+    }
+</script>
+{% endblock content %}

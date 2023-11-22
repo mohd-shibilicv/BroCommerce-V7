@@ -1,0 +1,150 @@
+<div
+    class="fixed flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 bg-blue-900 dark:bg-gray-900 h-full text-white transition-all duration-300 border-none z-10 sidebar">
+    <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
+        <ul class="flex flex-col py-4 space-y-1">
+            <li class="px-5 hidden md:block">
+                <div class="flex flex-row items-center h-8">
+                    <div class="text-sm font-light tracking-wide text-gray-400 uppercase">Main</div>
+                </div>
+            </li>
+            <li class="flex justify-between relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                <a href="{% url 'shopadmin:shopadmin' %}"
+                    class="flex">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="18" height="18"><path d="M3 13H11V3H3V13ZM3 21H11V15H3V21ZM13 21H21V11H13V21ZM13 3V9H21V3H13Z"></path></svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Dashboard</span>
+                </a>
+                <button onclick="toggleFullScreen()" id="fullscreen-btn" class=""><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="#fff" width="18" height="18"><path d="M8 3V5H4V9H2V3H8ZM2 21V15H4V19H8V21H2ZM22 21H16V19H20V15H22V21ZM22 9H20V5H16V3H22V9Z"></path></svg></button>
+            </li>
+            <li>
+                <a href="{% url 'shopadmin:products' %}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="18" height="18"><path d="M12.001 22C6.47813 22 2.00098 17.5228 2.00098 12C2.00098 6.47715 6.47813 2 12.001 2C17.5238 2 22.001 6.47715 22.001 12C22.001 17.5228 17.5238 22 12.001 22ZM13.3345 12H10.501V9H13.3345C14.1629 9 14.8345 9.67157 14.8345 10.5C14.8345 11.3284 14.1629 12 13.3345 12ZM13.3345 7H8.50098V17H10.501V14H13.3345C15.2675 14 16.8345 12.433 16.8345 10.5C16.8345 8.567 15.2675 7 13.3345 7Z"></path></svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Products</span>
+                    <!-- <span
+                        class="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">New</span> -->
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'shopadmin:customers' %}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="18" height="18"><path d="M2 22C2 17.5817 5.58172 14 10 14C14.4183 14 18 17.5817 18 22H2ZM10 13C6.685 13 4 10.315 4 7C4 3.685 6.685 1 10 1C13.315 1 16 3.685 16 7C16 10.315 13.315 13 10 13ZM17.3628 15.2332C20.4482 16.0217 22.7679 18.7235 22.9836 22H20C20 19.3902 19.0002 17.0139 17.3628 15.2332ZM15.3401 12.9569C16.9728 11.4922 18 9.36607 18 7C18 5.58266 17.6314 4.25141 16.9849 3.09687C19.2753 3.55397 21 5.57465 21 8C21 10.7625 18.7625 13 16 13C15.7763 13 15.556 12.9853 15.3401 12.9569Z"></path></svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Customers</span>
+                    <span
+                        class="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">{{ customers_count }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'shopadmin:categories' %}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="18" height="18"><path d="M20 22H4C3.44772 22 3 21.5523 3 21V8H21V21C21 21.5523 20.5523 22 20 22ZM21 6H3V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V6ZM7 11V15H11V11H7ZM7 17V19H17V17H7ZM13 12V14H17V12H13Z"></path></svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Categories</span>
+                    <!-- <span
+                        class="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">New</span> -->
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'shopadmin:orders' %}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" width="18" height="18"><path d="M11.0049 2L18.3032 4.28071C18.7206 4.41117 19.0049 4.79781 19.0049 5.23519V7H21.0049C21.5572 7 22.0049 7.44772 22.0049 8V10H9.00488V8C9.00488 7.44772 9.4526 7 10.0049 7H17.0049V5.97L11.0049 4.094L5.00488 5.97V13.3744C5.00488 14.6193 5.58406 15.7884 6.56329 16.5428L6.75154 16.6793L11.0049 19.579L14.7869 17H10.0049C9.4526 17 9.00488 16.5523 9.00488 16V12H22.0049V16C22.0049 16.5523 21.5572 17 21.0049 17L17.7848 17.0011C17.3982 17.5108 16.9276 17.9618 16.3849 18.3318L11.0049 22L5.62486 18.3318C3.98563 17.2141 3.00488 15.3584 3.00488 13.3744V5.23519C3.00488 4.79781 3.28913 4.41117 3.70661 4.28071L11.0049 2Z"></path></svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Orders</span>
+                    <span
+                        class="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-500 bg-red-50 rounded-full">{{ orders_count }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'shopadmin:invoices' %}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="18" height="18"><path d="M16 2L21 7V21.0082C21 21.556 20.5551 22 20.0066 22H3.9934C3.44476 22 3 21.5447 3 21.0082V2.9918C3 2.44405 3.44495 2 3.9934 2H16ZM11 7V17H13V7H11ZM15 11V17H17V11H15ZM7 13V17H9V13H7Z"></path></svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Invoices</span>
+                    <span
+                        class="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-500 bg-red-50 rounded-full">{{ invoices_count }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'shopadmin:return_requests' %}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                    <div class="inline-flex justify-center items-center ml-4">
+                        <i class="ri-arrow-go-back-fill"></i>
+                    </div>
+                    <span class="ml-2 text-sm tracking-wide truncate">Return Requests</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'shopadmin:coupons' %}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="18" height="18"><path d="M11.0049 20.9995C11.0049 20.1711 10.3333 19.4995 9.50488 19.4995C8.67646 19.4995 8.00488 20.1711 8.00488 20.9995H3.00488C2.4526 20.9995 2.00488 20.5518 2.00488 19.9995V3.99951C2.00488 3.44723 2.4526 2.99951 3.00488 2.99951H8.00488C8.00488 3.82794 8.67646 4.49951 9.50488 4.49951C10.3333 4.49951 11.0049 3.82794 11.0049 2.99951H21.0049C21.5572 2.99951 22.0049 3.44723 22.0049 3.99951V9.49951C20.6242 9.49951 19.5049 10.6188 19.5049 11.9995C19.5049 13.3802 20.6242 14.4995 22.0049 14.4995V19.9995C22.0049 20.5518 21.5572 20.9995 21.0049 20.9995H11.0049ZM9.50488 10.4995C10.3333 10.4995 11.0049 9.82794 11.0049 8.99951C11.0049 8.17108 10.3333 7.49951 9.50488 7.49951C8.67646 7.49951 8.00488 8.17108 8.00488 8.99951C8.00488 9.82794 8.67646 10.4995 9.50488 10.4995ZM9.50488 16.4995C10.3333 16.4995 11.0049 15.8279 11.0049 14.9995C11.0049 14.1711 10.3333 13.4995 9.50488 13.4995C8.67646 13.4995 8.00488 14.1711 8.00488 14.9995C8.00488 15.8279 8.67646 16.4995 9.50488 16.4995Z"></path></svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Coupons</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'shopadmin:admins' %}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" width="18" height="18"><path d="M12 14V22H4C4 17.5817 7.58172 14 12 14ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM14.5946 18.8115C14.5327 18.5511 14.5 18.2794 14.5 18C14.5 17.7207 14.5327 17.449 14.5945 17.1886L13.6029 16.6161L14.6029 14.884L15.5952 15.4569C15.9883 15.0851 16.4676 14.8034 17 14.6449V13.5H19V14.6449C19.5324 14.8034 20.0116 15.0851 20.4047 15.4569L21.3971 14.8839L22.3972 16.616L21.4055 17.1885C21.4673 17.449 21.5 17.7207 21.5 18C21.5 18.2793 21.4673 18.551 21.4055 18.8114L22.3972 19.3839L21.3972 21.116L20.4048 20.543C20.0117 20.9149 19.5325 21.1966 19.0001 21.355V22.5H17.0001V21.3551C16.4677 21.1967 15.9884 20.915 15.5953 20.5431L14.603 21.1161L13.6029 19.384L14.5946 18.8115ZM18 17C17.4477 17 17 17.4477 17 18C17 18.5523 17.4477 19 18 19C18.5523 19 19 18.5523 19 18C19 17.4477 18.5523 17 18 17Z"></path></svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Admins</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'shopadmin:delivery_options' %}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" width="18" height="18"><path d="M17 8H20L23 12.0557V18H20.9646C20.7219 19.6961 19.2632 21 17.5 21C15.7368 21 14.2781 19.6961 14.0354 18H8.96456C8.72194 19.6961 7.26324 21 5.5 21C3.73676 21 2.27806 19.6961 2.03544 18H1V6C1 5.44772 1.44772 5 2 5H16C16.5523 5 17 5.44772 17 6V8ZM17 10V13H21V12.715L18.9917 10H17Z"></path></svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Delivery options</span>
+                </a>
+            </li>
+            
+            <li class="px-5 hidden md:block">
+                <div class="flex flex-row items-center mt-5 h-8">
+                    <div class="text-sm font-light tracking-wide text-gray-400 uppercase">Settings</div>
+                </div>
+            </li>
+            <li>
+                <a href="{% url 'shopadmin:profile' %}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="#"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Settings</span>
+                </a>
+            </li>
+        </ul>
+        <p class="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @{% now "Y" %} BroCommerce</p>
+    </div>
+</div>
+<!-- ./Sidebar -->  

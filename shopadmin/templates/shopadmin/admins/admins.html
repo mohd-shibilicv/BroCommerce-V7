@@ -1,0 +1,152 @@
+{% extends 'shopadmin/shopadmin_base.html' %}
+
+{% load static %}
+
+{% block title %}
+Admins | BroCommerce Admin
+{% endblock title %}
+
+{% block content %}
+<div x-data="setup()" :class="{ 'dark': isDark }">
+    <div
+        class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+        <!-- Header -->
+        {% include 'shopadmin/header.html' %}
+        <!-- Sidebar -->
+        {% include 'shopadmin/sidebar.html' %}
+
+        <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+
+            <div class="grid grid-cols-1 lg:grid-cols-1 p-4 gap-4">
+
+
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <div class="flex items-center justify-between p-5 bg-white dark:bg-gray-900">
+                        <!-- <label for="table-search" class="sr-only">Search</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                            </div>
+                            <input type="text" id="table-search-users"
+                                class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Search for admins">
+                        </div> -->
+                        <h1 class="text-xl mx-10 text-gray-800 dark:text-white">Admins</h1>
+                        <div class="relative w-full max-w-full flex-grow flex-1 text-right">
+                            <button
+                                class="bg-gray-500 dark:bg-gray-700 text-white active:bg-gray-600 dark:text-white text-xs font-bold uppercase px-3 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"><a href="{% url 'shopadmin:add_admin' %}"> Add Admin</a></button>
+                        </div>
+                    </div>
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="p-4">
+                                    <div class="flex items-center">
+                                        <p></p>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Mobile
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Joined on
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    is_active
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for admin in admins %}
+                                
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-900">
+                                <td class="w-4 p-4">
+                                    <div class="flex items-center">
+                                        <p></p>
+                                    </div>
+                                </td>
+                                <th scope="row"
+                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                    <img class="w-10 h-10 rounded-full" src="{{ admin.profile.url }}"
+                                        alt="Jese image">
+                                    <div class="pl-3">
+                                        <div class="text-base font-semibold">{{ admin.username }}</div>
+                                        <div class="font-normal text-gray-500">{{ admin.email }}</div>
+                                    </div>
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{ admin.mobile }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ admin.created|date:'F d, Y' }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    
+                                    {% if admin.is_active %}
+                                    <div class="flex items-center">
+                                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> {{ admin.is_active }}
+                                    </div>
+                                    {% else %}
+                                    <div class="flex items-center">
+                                        <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div> {{ admin.is_active }}
+                                    </div>
+                                    {% endif %}
+                                </td>
+                                <td class="m-3">
+                                    {% if admin.is_active %}
+                                    <a href="{% url 'shopadmin:activate_or_deactivate_admin' admin.id %}" class="font-medium text-red-600 dark:text-red-500 mr-2 hover:underline">
+                                        Deactivate
+                                    </a>
+                                    {% else %}
+                                    <a href="{% url 'shopadmin:activate_or_deactivate_admin' admin.id %}" class="font-medium text-yellow-600 dark:text-yellow-500 mr-2 hover:underline">
+                                        Activate
+                                    </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const setup = () => {
+        const getTheme = () => {
+            if (window.localStorage.getItem('dark')) {
+                return JSON.parse(window.localStorage.getItem('dark'))
+            }
+            return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+
+        const setTheme = (value) => {
+            window.localStorage.setItem('dark', value)
+        }
+
+        return {
+            loading: true,
+            isDark: getTheme(),
+            toggleTheme() {
+                this.isDark = !this.isDark
+                setTheme(this.isDark)
+            },
+        }
+    }
+</script>
+{% endblock content %}

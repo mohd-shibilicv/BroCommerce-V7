@@ -1,0 +1,104 @@
+{% extends 'shopadmin/shopadmin_base.html' %}
+
+{% load static %}
+
+{% block title %}
+Delivery Options | BroCommerce Admin
+{% endblock title %}
+
+{% block content %}
+<div x-data="setup()" :class="{ 'dark': isDark }">
+    <div
+        class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+        <!-- Header -->
+        {% include 'shopadmin/header.html' %}
+        <!-- Sidebar -->
+        {% include 'shopadmin/sidebar.html' %}
+
+        <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+
+            <div class="grid grid-cols-1 lg:grid-cols-1 p-4 gap-4">
+
+            <!-- Orders Table -->
+            <div class="mt-4 mx-4">
+                <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                    <div class="w-full overflow-x-auto">
+                        <div class="flex flex-wrap px-4 py-2 bg-gray-200 dark:bg-gray-900">
+                            <div class="relative w-full max-w-full flex-grow flex-1">
+                                <h3 class="font-semibold text-base text-2xl text-gray-800 dark:text-white">Delivery Options</h3>
+                            </div>
+                            <div class="relative w-full max-w-full flex-grow flex-1 text-right">
+                                <button
+                                    class="bg-gray-500 dark:bg-gray-700 text-white active:bg-gray-600 dark:text-white dark:active:text-gray-700 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    type="button"><a href="{% url 'shopadmin:create_delivery_option' %}"> Add</a></button>
+                            </div>
+                        </div>
+                        <table class="w-full">
+                            <thead>
+                                <tr
+                                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                    <th class="px-4 py-3">Delivery Option</th>
+                                    <th class="px-4 py-3">delivery_price</th>
+                                    <th class="px-4 py-3">delivery_method</th>
+                                    <th class="px-4 py-3">delivery_timeframe</th>
+                                    <th class="px-4 py-3">delivery_window</th>
+                                    <th class="px-4 py-3">display order</th>
+                                    <th class="px-4 py-3">is active</th>
+                                    <th class="px-4 py-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                
+                                {% for option in delivery_options %}
+                                <tr
+                                    class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+                                    <td class="px-4 py-3 text-sm">{{ option.delivery_name }}</td>
+                                    <td class="px-4 py-3 text-sm">$ {{ option.delivery_price }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ option.delivery_method }}</td>
+                                    
+                                    <td class="px-4 py-3 text-sm">{{ option.delivery_timeframe }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ option.delivery_window }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ option.order }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ option.is_active }}</td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <a href="{% url 'shopadmin:edit_delivery_option' option.id %}" class="font-medium text-blue-600 dark:text-blue-500 mr-2 hover:underline">Edit</a>
+                                        <a href="{% url 'shopadmin:delete_delivery_option' option.id %}" class="font-medium text-red-600 dark:text-red-500 mr-2 hover:underline">Delete</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Orders Table -->
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const setup = () => {
+        const getTheme = () => {
+            if (window.localStorage.getItem('dark')) {
+                return JSON.parse(window.localStorage.getItem('dark'))
+            }
+            return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+
+        const setTheme = (value) => {
+            window.localStorage.setItem('dark', value)
+        }
+
+        return {
+            loading: true,
+            isDark: getTheme(),
+            toggleTheme() {
+                this.isDark = !this.isDark
+                setTheme(this.isDark)
+            },
+        }
+    }
+</script>
+{% endblock content %}

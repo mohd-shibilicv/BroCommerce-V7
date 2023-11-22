@@ -1,0 +1,88 @@
+{% extends 'shopadmin/shopadmin_base.html' %}
+
+{% load tailwind_filters %}
+
+{% load static %}
+
+{% block title %}
+Return Order Details | BroCommerce Admin
+{% endblock title %}
+
+{% block content %}
+<div x-data="setup()" :class="{ 'dark': isDark }">
+    <div
+        class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+        <!-- Header -->
+        {% include 'shopadmin/header.html' %}
+        <!-- Sidebar -->
+        {% include 'shopadmin/sidebar.html' %}
+
+        <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+            <div class="container mx-auto p-6 bg-white dark:bg-gray-700">
+                <section class="text-gray-700 dark:text-white body-font overflow-hidden bg-white dark:bg-gray-700">
+                    <div class="container px-5 py-24 mx-auto">
+                        <div class="lg:w-4/5 mx-auto flex flex-wrap">
+                            
+                            {% if return_request.screenshot %}
+                            <img alt="ecommerce"
+                                class="lg:w-1/2 w-full object-cover object-center rounded border border-white dark:border-gray-700"
+                                src="{{ return_request.screenshot.url }}" style="max-height: fit-content;">
+                            {% endif %}
+                                
+                            <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                                <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ return_request.order.order_key }}</h2>
+                                <h1 class="text-gray-900 dark:text-white text-3xl title-font font-medium mb-1">@{{ return_request.user.username }}
+                                </h1>
+                                <p class="leading-relaxed text-lg">{{ return_request.reason }}</p>
+                                <div class="flex justify-between mt-10">
+                                    <span class="title-font font-medium text-2xl text-gray-900 dark:text-white">${{ return_request.order.total_paid }}</span>
+                                    <div class="flex gap-3">
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <a href="{% url 'shopadmin:return_order_details' return_request.id %}">
+                                                
+                                                {% if not return_request.approved %}
+                                                <button class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Approve</button>
+                                                {% endif %}
+                                            </a>
+                                        </form>
+                                        {% if not return_request.approved %}
+                                        <a href="{% url 'shopadmin:return_requests' %}">
+                                            <button type="button" class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Deny</button>
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    const setup = () => {
+        const getTheme = () => {
+            if (window.localStorage.getItem('dark')) {
+                return JSON.parse(window.localStorage.getItem('dark'))
+            }
+            return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+
+        const setTheme = (value) => {
+            window.localStorage.setItem('dark', value)
+        }
+
+        return {
+            loading: true,
+            isDark: getTheme(),
+            toggleTheme() {
+                this.isDark = !this.isDark
+                setTheme(this.isDark)
+            },
+        }
+    }
+</script>
+{% endblock content %}

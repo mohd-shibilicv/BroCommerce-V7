@@ -1,0 +1,108 @@
+{% extends 'shopadmin/shopadmin_base.html' %}
+
+{% load tailwind_filters %}
+
+{% load static %}
+
+{% block title %}
+Add Coupon | BroCommerce Admin
+{% endblock title %}
+
+{% block content %}
+<div x-data="setup()" :class="{ 'dark': isDark }">
+    <div
+        class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+        <!-- Header -->
+        {% include 'shopadmin/header.html' %}
+        <!-- Sidebar -->
+        {% include 'shopadmin/sidebar.html' %}
+
+        <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
+            <div class="max-w-2xl mx-auto w-full bg-white text-gray-700 rounded p-6 mt-10 space-y-4 dark:text-white dark:bg-gray-600">
+                <form method="post" class="max-w-xl mx-auto">
+                    {% csrf_token %}
+                    <div class="mb-6 text-gray-900">
+                        <label class="block text-gray-700 dark:text-white text-sm font-bold mb-2" for="{{ form.user.id_for_label }}">Select Users:</label>
+                        {{ form.user }}
+                        <div class="text-red-500 text-sm">
+                            {{ form.user.errors }}
+                        </div>
+                    </div>
+                
+                    <div class="mb-6  text-gray-900">
+                        <label class="block text-gray-700 dark:text-white text-sm font-bold mb-2" for="{{ form.code.id_for_label }}">Coupon Code:</label>
+                        {{ form.code }}
+                        <div class="text-red-500 text-sm">
+                            {{ form.code.errors }}
+                        </div>
+                    </div>
+                
+                    <div class="mb-6  text-gray-900">
+                        <label class="block text-gray-700 dark:text-white text-sm font-bold mb-2" for="{{ form.discount.id_for_label }}">Discount (%):</label>
+                        {{ form.discount }}
+                        <div class="text-red-500 text-sm">
+                            {{ form.discount.errors }}
+                        </div>
+                    </div>
+                
+                    <div class="mb-6  text-gray-900">
+                        <label class="block text-gray-700 dark:text-white text-sm font-bold mb-2" for="{{ form.valid_from.id_for_label }}">Valid From:</label>
+                        {{ form.valid_from }}
+                        <div class="text-red-500 text-sm">
+                            {{ form.valid_from.errors }}
+                        </div>
+                    </div>
+                
+                    <div class="mb-6  text-gray-900">
+                        <label class="block text-gray-700 dark:text-white text-sm font-bold mb-2" for="{{ form.valid_to.id_for_label }}">Valid To:</label>
+                        {{ form.valid_to }}
+                        <div class="text-red-500 text-sm">
+                            {{ form.valid_to.errors }}
+                        </div>
+                        <div class="text-red-500 text-sm mb-4">
+                            {{ form.non_field_errors }}
+                        </div>
+                    </div>
+                
+                    <div class="mb-6  text-gray-900">
+                        <label class="block text-gray-700 dark:text-white text-sm font-bold mb-2" for="{{ form.active.id_for_label }}">Active:</label>
+                        {{ form.active }}
+                        <div class="text-red-500 text-sm">
+                            {{ form.active.errors }}
+                        </div>
+                    </div>
+                
+                    <div class="flex items-center justify-end">
+                        <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-md font-semibold">
+                            Add Coupon
+                        </button>
+                    </div>
+                </form>                
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const setup = () => {
+        const getTheme = () => {
+            if (window.localStorage.getItem('dark')) {
+                return JSON.parse(window.localStorage.getItem('dark'))
+            }
+            return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+
+        const setTheme = (value) => {
+            window.localStorage.setItem('dark', value)
+        }
+
+        return {
+            loading: true,
+            isDark: getTheme(),
+            toggleTheme() {
+                this.isDark = !this.isDark
+                setTheme(this.isDark)
+            },
+        }
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,365 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load tailwind_filters %}
+
+{% block title %}
+{{ product.title }} | Details
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% block breadcrumb %}
+    <ol class="flex space-x-2 py-5 px-5">
+        <li><a href="{% url 'home:home' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li><a href="{% url 'App:all_products' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Shop</a></li>
+        <li class="text-purple-700" aria-current="page"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></li>
+    </ol>
+    {% endblock breadcrumb %}
+</div>
+<section class="text-gray-700 body-font overflow-hidden bg-white p-10">
+    <div class="container px-5 py-20 mx-auto">
+        <div class="lg:w-4/5 mx-auto flex">
+            <div class="flex flex-col p-2 gap-1">
+                {% for image in images %}
+                {% if not image.is_feature %}
+                <div class="image-link" href="{{ image.image.url }}" style="max-width: 100px; max-height: 100px;">
+                    <img alt="ecommerce" class="lg:w-1/2 w-full rounded-xl border border-gray-200"
+                        src="{{ image.image.url }}">
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="flex flex-col">
+                <div class="image-link" href="{{ images.0.image.url }}" style="max-width: 400px; max-height: 600px;">
+                    <img alt="ecommerce" class="lg:w-1/2 w-full drift-demo-trigger rounded-xl border border-gray-200"
+                        src="{{ images.0.image.url }}">
+                </div>
+            </div>
+
+            {% if product.product_stock > 0 %}
+            <div
+                class="center absolute top-45 left-30 inline-block select-none whitespace-nowrap rounded-lg bg-green-500 py-1 px-1 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
+                <div class="mt-px">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width="18" height="18" viewBox="0 0 24 24">
+                        <path
+                            d="M9 16.17l-4.24-4.24a.996.996 0 1 1 1.41-1.41L9 13.35l10.59-10.6a.996.996 0 1 1 1.41 1.41L9 16.17z" />
+                    </svg>
+                </div>
+            </div>
+            {% else %}
+            <div
+                class="center absolute top-45 left-30 inline-block select-none whitespace-nowrap rounded-lg bg-red-500 py-1 px-1 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
+                <div class="mt-px">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width="18" height="18" viewBox="0 0 24 24">
+                        <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    </svg>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 details">
+                <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ product.author|upper }}</h2>
+                <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ product.title }}</h1>
+                
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-5">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700  uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                {% for specification in product_specifications %}
+                                <th scope="col" class="px-6 py-3">
+                                    {{ specification.specification.name }}
+                                </th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border-b dark:bg-gray-200 dark:border-gray-200">
+                                {% for specification in product_specifications %}
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ specification.value }}
+                                </th>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <p id="short-description" class="leading-relaxed mb-2">{{ product.description|slice:":255" }} ...</p>
+                <p id="full-description" class="hidden leading-relaxed mb-2">{{ product.description }}</p>
+                
+                {% if product.description|length > 255 %}
+                <button id="read-more-button" class="text-sm hover:text-blue-500 p-2 rounded-xl bg-gray-100">Read More</button>
+                {% endif %}
+                <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+                    <div class="flex ml-6 items-center">
+                        <span class="mr-3">Quantity: </span>
+                        <div class="relative">
+                            <input type="number" id="select"
+                            class="rounded border appearance-none border-gray-400 py-2 focus:outline-none text-base w-1/3"
+                            min="1" max="{{ product.stock_count }}" step="1" value="1">
+                        </div>
+                    </div>
+                    <p class="title-font font-medium">Available stock: <span class="text-xl">{{ product.product_stock }}</span></p>
+                </div>
+                <div class="flex">
+                    <div class="flex gap-3">
+                        {% if product.on_sale or product.category.on_sale %}
+                        
+                        {% if not product.discount_price %}
+                        <span class="title-font font-medium text-3xl text-gray-900">${{ product.regular_price }}</span>
+                        {% else %}
+                        <span class="title-font font-medium text-lg text-red-500" style="text-decoration: line-through;">${{ product.regular_price|floatformat:'2' }}</span>
+                        <p class="title-font font-medium text-3xl text-gray-900">${{ product.discount_price|floatformat:'2' }}</p>
+                        {% endif %}
+                        
+                        {% else %}
+                        <p class="title-font font-medium text-3xl text-gray-900">${{ product.regular_price|floatformat:'2' }}</p>
+                        {% endif %}
+                    </div>
+
+                    {% if product.product_stock <= 0 %} <a
+                        href="{% url 'App:category_list' category_slug=product.category.slug %}"
+                        class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded">
+                        Find similar</a>
+                    {% else %}
+                    <div class="w-full flex justify-end gap-3">
+                        <button id="add-button" value="{{ product.id }}"
+                        class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded">Add to Cart</button>
+                    </div>
+
+                    {% if product in user_wishlist %}
+                    <a href="{% url 'account:add_to_wishlist' product.id %}">
+                        <button
+                            class="rounded-full w-10 h-10 shadow-xl bg-gray-100 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                            <svg fill="#ff0000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-5 h-5" viewBox="0 0 24 24">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
+                                </path>
+                            </svg>
+                        </button>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'account:add_to_wishlist' product.id %}">
+                        <button
+                            class="rounded-full w-10 shadow-md h-10 bg-gray-100 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                            <svg fill="CurrentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-5 h-5" viewBox="0 0 24 24">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
+                                </path>
+                            </svg>
+                        </button>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container mt-10">
+    <div class="sectop flexitem">
+        {% if related_products %}
+        <h2><span class="circle"></span><span>Related Products</span></h2>
+        {% else %}
+        <h2><span class="circle"></span><span>More Products</span></h2>
+        {% endif %}
+    </div>
+
+    <div class="mx-auto grid max-w-6xl  grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {% if related_products %}
+        {% for item in related_products %}
+        <article
+            class="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 ">
+            <a href="{{ item.get_absolute_url }}">
+
+                {% for image in item.product_image.all %}
+                {% if image.is_feature %}
+                <div style="max-width: 400px; max-height: 200px;"
+                    class="relative flex items-end overflow-hidden rounded-xl">
+                    <img class="object-cover" src="{{ image.image.url }}" alt="{{ image.image_alt_text }}" />
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                <div class="mt-1 p-2">
+                    <h2 class="text-slate-700">{{ item.title }}</h2>
+                    <p class="mt-1 text-xs text-slate-400">{{ item.category.name }}</p>
+                    <p class="mt-1 text-md font-semibold text-slate-400">{{ item.author }}</p>
+                    <p class="mt-1 text-sm text-slate-400">{{ item.created_at|date:"F j, Y" }}</p>
+
+                    <div class="mt-3 flex items-end justify-between">
+                        <div>
+                            {% if item.on_sale or item.category.on_sale %}
+                            
+                            {% if not item.discount_price %}
+                            <p class="text-lg font-bold text-blue-500">${{ item.regular_price }}</p>
+                            {% else %}
+                            <p class="text-md font-bold text-red-500" style="text-decoration: line-through;">${{ item.regular_price }}</p>
+                            <p class="text-lg font-bold text-blue-500">${{ item.discount_price }}</p>
+                            {% endif %}
+                            
+                            {% else %}
+                            <p class="text-lg font-bold text-blue-500">${{ item.regular_price }}</p>
+                            {% endif %}
+                        </div>
+                        {% if not item in user_wishlist %}
+                        <a href="{% url 'account:add_to_wishlist' item.id %}">
+                            <div
+                                class="flex items-center space-x-1.5 rounded-lg bg-red-500 px-2 py-1.5 text-white duration-100 hover:bg-red-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width="18" height="18" viewBox="0 0 24 24">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                            </div>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+        </article>
+        {% endfor %}
+        {% else %}
+        {% for item in default_products %}
+        <article
+            class="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 ">
+            <a href="{{ item.get_absolute_url }}">
+                <div style="max-width: 400px; max-height: 200px;"
+                    class="relative flex items-end overflow-hidden rounded-xl">
+                    <img src="{{ item.cover_image.url }}" alt="Product Images" />
+                </div>
+
+                <div class="mt-1 p-2">
+                    <h2 class="text-slate-700">{{ item.title }}</h2>
+                    <p class="mt-1 text-xs text-slate-400">{{ item.category.name }}</p>
+                    <p class="mt-1 text-md font-semibold text-slate-400">{{ item.author }}</p>
+                    <p class="mt-1 text-sm text-slate-400">{{ item.created_at|date:"F j, Y" }}</p>
+
+                    <div class="mt-3 flex items-end justify-between">
+                        <div>
+                            {% if item.on_sale or item.category.on_sale %}
+                            
+                            {% if not item.discount_price %}
+                            <p class="text-lg font-bold text-blue-500">${{ item.regular_price }}</p>
+                            {% else %}
+                            <p class="text-md font-bold text-red-500" style="text-decoration: line-through;">${{ item.regular_price }}</p>
+                            <p class="text-lg font-bold text-blue-500">${{ item.discount_price }}</p>
+                            {% endif %}
+                            
+                            {% else %}
+                            <p class="text-lg font-bold text-blue-500">${{ item.regular_price }}</p>
+                            {% endif %}
+                        </div>
+                        {% if not item in user_wishlist %}
+                        <a href="{% url 'account:add_to_wishlist' item.id %}">
+                            <div
+                                class="flex items-center space-x-1.5 rounded-lg bg-red-500 px-2 py-1.5 text-white duration-100 hover:bg-red-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width="18" height="18" viewBox="0 0 24 24">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                            </div>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+        </article>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+</section>
+
+<script>
+    $(document).on('click', '#add-button', function (e) {
+        e.preventDefault();
+        quantity = $('#select').val();
+        if (quantity >= 1 && quantity <= 10) {
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart:add_to_cart" %}',
+                data: {
+                    productid: $('#add-button').val(),
+                    productquantity: quantity,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post',
+                },
+                success: function (json) {
+                    document.getElementById('cart-icon').innerHTML = json.quantity
+                },
+                error: function (xhr, errmsg, err) { }
+            });
+        } else {
+            alert('Quantity must be between 1 and 10.');
+            quantityInput.focus();
+        }
+    })
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const readMoreButton = document.getElementById("read-more-button");
+        const extraContent = document.getElementById("full-description");
+        const shortContent = document.getElementById("short-description");
+
+        readMoreButton.addEventListener("click", function () {
+            if (extraContent.style.display === "none" || extraContent.style.display === "") {
+                shortContent.style.display = "none";
+                extraContent.style.display = "block";
+                readMoreButton.textContent = "Read Less";
+            } else {
+                shortContent.style.display = "block";
+                extraContent.style.display = "none";
+                readMoreButton.textContent = "Read More";
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.image-link').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            },
+            mainClass: 'mfp-with-zoom',
+            zoom: {
+                enabled: true,
+                duration: 300,
+                easing: 'ease-in-out'
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $(".like-button").click(function() {
+            var reviewId = $(this).data("review-id");
+            
+            // Make an AJAX request to like the comment
+            $.ajax({
+                type: 'POST',
+                url: '{% url "App:like_comment" %}',
+                data: {
+                    review_id: reviewId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post',
+                },
+                success: function (json) {
+                    var likeCountSpan = $("#like-count-" + reviewId);
+                    likeCountSpan.text(json.like_count);
+                    likeCountSpan.style.background = 'red';
+                },
+                error: function (xhr, errmsg, err) {}
+            });
+        });
+    });
+</script>
+
+{% endblock content %}

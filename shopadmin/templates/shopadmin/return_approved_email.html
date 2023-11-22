@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Return Request is Approved</title>
+</head>
+<body>
+    <p>Dear {{ order.user.username }},</p>
+    
+    <p>We are pleased to inform you that your return request for order {{ order.order_key }} has been approved.</p>
+    
+    <p>Your refund amount of ${{ refund_amount }} has been processed and will be added to your wallet.</p>
+    
+    <p>Thank you for using our services. If you have any questions or need further assistance, please don't hesitate to contact us.</p>
+    
+    <p>Best regards,</p>
+    <p>Your BroCommerce Team</p>
+</body>
+</html>
