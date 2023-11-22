@@ -1,0 +1,16 @@
+CHANGES.rst
+LICENSE
+README.rst
+flake8_isort.py
+requirements-lint.txt
+requirements.txt
+run_tests.py
+setup.cfg
+setup.py
+flake8_isort.egg-info/PKG-INFO
+flake8_isort.egg-info/SOURCES.txt
+flake8_isort.egg-info/dependency_links.txt
+flake8_isort.egg-info/entry_points.txt
+flake8_isort.egg-info/not-zip-safe
+flake8_isort.egg-info/requires.txt
+flake8_isort.egg-info/top_level.txt

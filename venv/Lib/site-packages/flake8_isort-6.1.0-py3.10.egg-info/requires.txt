@@ -1,0 +1,5 @@
+flake8
+isort<6,>=5.0.0
+
+[test]
+pytest
