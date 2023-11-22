@@ -9,7 +9,6 @@ from wallet.models import Wallet
 from .filters import ProductFilter
 from .forms import ProductReviewForm
 from .models import Category, Product, ProductReview, ProductSpecificationValue
-from .resources import ProductModelResource
 
 
 def all_products(request):
@@ -164,11 +163,3 @@ def like_comment(request):
 
     # Handle other request methods or non-AJAX requests
     return JsonResponse({"error": "Invalid request"}, status=400)
-
-
-def export_data(request):
-    product_model_resource = ProductModelResource()
-    dataset = product_model_resource.export()
-    response = HttpResponse(dataset.csv, content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="product_model_data.csv"'
-    return response

@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib import admin
-from import_export import resources
 from mptt.admin import MPTTModelAdmin
 
 from .models import (Category, CategoryOffers, Product, ProductImage,
