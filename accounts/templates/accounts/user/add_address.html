@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load tailwind_filters %}
+
+{% block title %}
+Add Address
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% block breadcrumb %}
+    <ol class="flex space-x-2 py-5 px-5">
+        <li><a href="{% url 'home:home' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li><a href="{% url 'account:dashboard' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Dashboard</a></li>
+        <li><a href="{% url 'account:addresses' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Addresses</a></li>
+        <li class="text-purple-700" aria-current="page"><a href="{% url 'account:add_address' %}">Add Address</a></li> 
+    </ol>
+    {% endblock breadcrumb %}
+</div>
+<div class="flex container">
+    {% include 'accounts/user/user_sidebar.html' %}
+    <div class="w-full flex items-center justify-center p-5">
+        <div class="mx-auto w-full max-w-[550px]">
+            <h1 class="text-center mb-5 text-3xl font-medium text-gray-800">Add Address</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div>
+                    <button type="submit" onclick="submitForm()" class="w-full hover:shadow-form rounded-md bg-gray-500 hover:bg-gray-600 p-2 text-center text-base font-semibold text-white outline-none">
+                        Add
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% block footer %}{% endblock footer %}
+
+<script>
+    function submitForm() {
+        var form = document.getElementsByName('address_form')[0];
+        form.submit();
+        form.reset();
+        return false;
+    }
+</script>
+
+{% endblock content %}

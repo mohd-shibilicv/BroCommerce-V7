@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Payment
+{% endblock title %}
+
+{% block content %}
+{% block breadcrumb %}
+<ol class="flex space-x-2 py-5 px-5">
+    <li><a href="{% url 'home:home' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+    <li><a href="{% url 'App:all_products' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Shop</a></li>
+    <li><a href="{% url 'payment:basket' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Checkout</a></li>
+    <li class="text-purple-700" aria-current="page"><a href="{% url 'payment:basket' %}">Order Placed</a></li> 
+</ol>
+{% endblock breadcrumb %}
+<!-- This is an example component -->
+<div id="payment-form" class="max-w-2xl mx-auto bg-white p-14">
+    <h1 class="w-full flex text-3xl justify-center font-semibold items-center">Order has been placed</h1><br>
+    <p>Check you email for confirmation</p>
+    <a href="{% url 'account:dashboard' %}">See Orders</a>
+</div>
+{% endblock content %}

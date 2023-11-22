@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+User Addresses
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% block breadcrumb %}
+    <ol class="flex space-x-2 py-2 px-5">
+        <li><a href="{% url 'home:home' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li><a href="{% url 'account:dashboard' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Dashboard</a></li>
+        <li class="text-purple-700" aria-current="page"><a href="{% url 'account:addresses' %}">Addresses</a></li>
+    </ol>
+    {% endblock breadcrumb %}
+</div>
+
+<div class="flex container">
+    {% include 'accounts/user/user_sidebar.html' %}
+    <div class="block w-full mx-auto pl-3 pr-5 mt-16">
+        <div
+            class="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-100 dark:bg-gray-800 w-full shadow-lg rounded">
+            <div class="rounded-t mb-0 px-0 border-0">
+                <div class="flex flex-wrap items-center px-4 py-2">
+                    <div class="relative w-full max-w-full flex-grow flex-1">
+                        <h3 class="font-semibold text-base text-gray-900 dark:text-white">My Addresses</h3>
+                    </div>
+                    <a href="{% url 'account:add_address' %}">
+                        <button type="button" class="text-white gap-1 bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-600 dark:focus:ring-blue-700">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 100 100"
+                                fill="currentColor"
+                                >
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="10" />
+                                <line x1="50" y1="30" x2="50" y2="70" stroke="currentColor" stroke-width="10" />
+                                <line x1="30" y1="50" x2="70" y2="50" stroke="currentColor" stroke-width="10" />
+                                </svg>
+                            Add
+                        </button>
+                    </a>
+                   
+                </div>
+                <div class="block w-full overflow-x-auto">
+                    <table class="items-center w-full bg-transparent border-collapse">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="px-2 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Name</th>
+                                <th
+                                    class="px-2 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Email</th>
+                                <th
+                                    class="px-2 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Address Line 1</th>
+                                <th
+                                    class="px-2 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Address Line 2</th>
+                                <th
+                                    class="px-2 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Town / City</th>
+                                <th
+                                    class="px-2 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Postal Code</th>
+                                <th
+                                    class="px-2 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Phone Number</th>
+                                <th
+                                    class="px-2 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px">Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for address in addresses %}
+                            <tr class="text-gray-700 dark:text-gray-100">
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ address.full_name }}</td>
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ address.email }}</td>
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ address.address_line }}</td>
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ address.address_line2 }}</td>
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ address.town_city }}</td>
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ address.postcode }}</td>
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ address.phone }}</td>
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <div class="flex items-center flex-col gap-3">
+                                        <a href="{% url 'account:edit_address' address.pk %}" class="font-medium text-blue-600 dark:text-blue-500 mr-2 hover:underline">Edit</a>
+                                        <a href="{% url 'account:delete_address' address.pk %}" class="font-medium text-red-600 dark:text-red-500 mr-2 hover:underline">Delete</a>
+                                        
+                                        {% if address.default %}
+                                        <span class="font-medium text-indigo-600 dark:text-indigo-500 mr-2 hover:underline">Default ✅</span>
+                                        {% else %}
+                                        <a href="{% url 'account:set_default_address' address.pk %}" class="font-medium text-yellow-600 dark:text-yellow-500 mr-2 hover:underline">Set Default</a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% block footer %}{% endblock footer %}
+{% endblock content %}

@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+User Dashboard
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% block breadcrumb %}
+    <ol class="flex space-x-2 py-2 px-5">
+        <li><a href="{% url 'home:home' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li><a href="{% url 'account:dashboard' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li class="text-purple-700" aria-current="page"><a href="{% url 'account:user_profile' %}">Profile</a></li>
+    </ol>
+    {% endblock breadcrumb %}
+</div>
+
+<div class="flex container">
+    {% include 'accounts/user/user_sidebar.html' %}
+
+    <section class="mx-auto w-full max-w-6xl py-1 bg-blueGray-50">
+        <div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
+            <div
+                class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+                <div class="rounded-t bg-white mb-0 px-6 py-6">
+                    <div class="text-center flex justify-between">
+                        <h6 class="text-blueGray-700 text-xl font-bold">
+                            My account
+                        </h6>
+                        <a href="{% url 'account:edit_details' %}">
+                            <button
+                                class="bg-indigo-500 text-white active:bg-indigo-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                type="button">
+                                Edit
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                    <form>
+                        <h6 class="text-blueGray-400 text-md mt-3 mb-6 font-bold uppercase">
+                            User Information
+                        </h6>
+                        <div class="flex flex-wrap">
+                            <div class="w-full lg:w-6/12 px-4">
+                                <div class="flex justify-center rounded-full items-center mb-3">
+                                    <img style="max-width: 150px; max-height: 150px; border-radius: 20px;" src="{{ user.profile.url }}" alt="Photo" />
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-6/12 px-4">
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        htmlfor="grid-password">
+                                        Username
+                                    </label>
+                                    <input type="text"
+                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" readonly
+                                        value="{{ user.username }}">
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-6/12 px-4">
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        htmlfor="grid-password">
+                                        Email address
+                                    </label>
+                                    <input type="email"
+                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" readonly
+                                        value="{{ user.email }}">
+                                </div>
+                            </div>
+                            {% if user.mobile %}
+                            <div class="w-full lg:w-6/12 px-4">
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        htmlfor="grid-password">
+                                       Mobile
+                                    </label>
+                                    <input type="text"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" readonly
+                                    value="{{ user.mobile }}">
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="w-full lg:w-6/12 px-4">
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        htmlfor="grid-password">
+                                       Created
+                                    </label>
+                                    <input type="text"
+                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" readonly
+                                        value="{{ user.created }}">
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-6/12 px-4">
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        htmlfor="grid-password">
+                                       Last Updated
+                                    </label>
+                                    <input type="text"
+                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" readonly
+                                        value="{{ user.updated }}">
+                                </div>
+                            </div>
+                            <!-- <div class="w-full lg:w-6/12 px-4">
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        htmlfor="grid-password">
+                                        Last Name
+                                    </label>
+                                    <input type="text"
+                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                        value="Jesse">
+                                </div>
+                            </div> -->
+                        </div>
+
+                        <hr class="mt-6 border-b-1 border-blueGray-300">
+
+                        <!-- <h6 class="text-blueGray-400 text-md mt-3 mb-6 font-bold uppercase">
+                            Contact Information
+                        </h6>
+                        <div class="flex flex-wrap">
+                            <div class="w-full lg:w-12/12 px-4">
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        htmlfor="grid-password">
+                                        Address
+                                    </label>
+                                    <input type="text"
+                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                        value="{{ user.address_line1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-4/12 px-4">
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        htmlfor="grid-password">
+                                        City
+                                    </label>
+                                    <input type="email"
+                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                        value="{{ user.town_city }}" readonly>
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-10/12 px-4">
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        htmlfor="grid-password">
+                                        Country
+                                        
+                                        <span class="absolute ml-3"><img src="{{ user.country.flag }}" alt="India"></span>
+                                       
+                                            
+                                    </label>
+                                    <input type="text"
+                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                        value="{{ user.country.name }}" readonly>
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-4/12 px-4">
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        htmlfor="grid-password">
+                                        Postal Code
+                                    </label>
+                                    <input type="text"
+                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                        value="{{ user.postcode }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="mt-6 border-b-1 border-blueGray-300">
+
+                        <h6 class="text-blueGray-400 text-md mt-3 mb-6 font-bold uppercase">
+                            About Me
+                        </h6>
+                        <div class="flex flex-wrap">
+                            <div class="w-full lg:w-12/12 px-4">
+                                <div class="relative w-full mb-3">
+                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        htmlfor="grid-password">
+                                        About me
+                                    </label>
+                                    <textarea type="text"
+                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                        rows="4" readonly>{{ user.about }}</textarea>
+                                </div>
+                            </div>
+                        </div> -->
+                    </form>
+                    <div class="flex justify-end text-center">
+                        <button onclick="openModal()"
+                            class="w-full bg-red-500 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-80 duration-300 hover:bg-red-600 px-3 py-2 rounded-xl text-white font-semibold">Deactivate Account
+                        </button><br>
+                        <div class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
+                            <div
+                                class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+                                <div class="modal-content py-4 text-left px-6">
+                                    <!--Title-->
+                                    <div class="flex justify-between items-center pb-3">
+                                        <p class="text-2xl font-bold">Deactivate account</p>
+                                        <div class="modal-close cursor-pointer z-50">
+                                            <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                viewBox="0 0 18 18">
+                                                <path
+                                                    d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <!--Body-->
+                                    <div class="my-5">
+                                        <p>Are you sure?</p>
+                                    </div>
+                                    <!--Footer-->
+                                    <div class="flex justify-end pt-2">
+                                        <button
+                                            class="focus:outline-none modal-close px-4 bg-gray-500 p-3 rounded-lg text-white hover:bg-gray-600">Cancel</button>
+                                        <a href="{% url 'account:delete_user' %}"
+                                            class="focus:outline-none px-4 bg-red-500 p-3 ml-3 rounded-lg text-white hover:bg-red-600">Deactivate</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<!-- <div class="p-10">
+    <div class="flex flex-col p-10 mx-auto mt-12 shadow-xl py-10">
+        <a href="{% url 'account:edit_details' %}"
+            class="w-full transition ease-in-out delay-50 hover:-translate-y-1 duration-300 hover:scale-110 bg-indigo-500 hover:bg-indigo-600 px-3 py-2 rounded-xl text-white font-semibold">Change
+            Details</a><br>
+        <a href="{% url 'account:delete_user' %}"
+            class="w-full bg-red-500 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300 hover:bg-red-600 px-3 py-2 rounded-xl text-white font-semibold">Deactivate
+            Account</a><br>
+        <a href="{% url 'account:password_change' %}"
+            class="bg-indigo-500 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300 hover:bg-indigo-600 px-3 py-2 rounded-xl text-white font-semibold">Reset
+            Password</a>
+    </div>
+</div> -->
+
+{% block footer %}{% endblock footer %}
+<script>
+    const modal = document.querySelector('.main-modal');
+    const closeButton = document.querySelectorAll('.modal-close');
+
+    const modalClose = () => {
+        modal.classList.remove('fadeIn');
+        modal.classList.add('fadeOut');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 500);
+    }
+
+    const openModal = () => {
+        modal.classList.remove('fadeOut');
+        modal.classList.add('fadeIn');
+        modal.style.display = 'flex';
+    }
+
+    for (let i = 0; i < closeButton.length; i++) {
+
+        const elements = closeButton[i];
+
+        elements.onclick = (e) => modalClose();
+
+        modal.style.display = 'none';
+
+        window.onclick = function (event) {
+            if (event.target == modal) modalClose();
+        }
+    }
+</script>
+{% endblock content %}

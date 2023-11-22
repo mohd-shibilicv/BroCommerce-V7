@@ -1,0 +1,331 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    BroCommerce | Home
+{% endblock title %}
+
+{% block content %}
+<div class="relative">
+    <div class="container mx-auto flex flex-col items-center py-12 sm:py-24 relative z-20">
+        <div class="w-11/12 sm:w-2/3 lg:flex justify-center items-center flex-col mb-5 sm:mb-10">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-gray-800 font-black leading-7 md:leading-10">
+                Discover a World of
+                <span class="text-indigo-700">Books</span>
+                Online
+            </h1>
+            <p class="mt-5 sm:mt-10 lg:w-10/12 text-gray-400 font-normal text-center text-sm sm:text-lg">
+                Explore our vast collection of books, from classics to new releases. Find your next literary adventure.
+            </p>
+        </div>
+        <div class="flex justify-center items-center">
+            <a href="{% url 'App:all_products' %}" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700
+                bg-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 lg:text-xl lg:font-bold
+                rounded text-white px-4 sm:px-10 border border-indigo-700 py-2 sm:py-4 text-sm">Shop Now</a>
+            <a href="{% url 'home:about' %}" class="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700
+                bg-transparent transition duration-150 ease-in-out hover:border-indigo-600 lg:text-xl lg:font-bold
+                hover:text-indigo-600 rounded border border-indigo-700 text-indigo-700 px-4 sm:px-10 py-2 sm:py-4 text-sm">About us</a>
+        </div>
+    </div>
+</div>
+<div class="slider flex min-h-screen items-center justify-start bg-white">
+    <div class="container">
+        <div class="wrapper">
+            <div class="myslider swiper">
+                <div class="swiper-wrapper">
+                    
+                    <div class="swiper-slide">
+                        <div class="item">
+                            <div class="image object-cover">
+                                <img src="{% static 'images/merchant.jpg' %}" alt="">
+                            </div>
+                            <div class="text-content flexcol">
+                                <h4>Fictional</h4>
+                                <h2><span>Get It Now!</span><br><span>Brand New Books</span></h2>
+                                <a href="{% url 'App:product_details' slug='the-merchant-of-venice' %}" class="primary-button">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="item">
+                            <div class="image object-cover">
+                                <img src="{% static 'images/ronaldo2.jpg' %}" alt="">
+                            </div>
+                            <div class="text-content flexcol">
+                                <h4>Sports</h4>
+                                <h2><span>Get It Now!</span><br><span>Fit Your Inspiration</span></h2>
+                                <a href="{% url 'App:product_details' slug='cristiano-ronaldo-the-ultimate-fan-book' %}" class="primary-button">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="item">
+                            <div class="image object-cover">
+                                <img src="{% static 'images/the art of war.jpg' %}" alt="">
+                            </div>
+                            <div class="text-content flexcol">
+                                <h4>Quick Offer</h4>
+                                <h2><span>Get It Now!</span><br><span>The Business Streategies</span></h2>
+                                <a href="{% url 'App:product_details' slug='the-art-of-war-deluxe-edition' %}" class="primary-button">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="item">
+                            <div class="image object-cover">
+                                <img src="{% static 'images/oscar_wilde.jpg' %}" alt="">
+                            </div>
+                            <div class="text-content flexcol">
+                                <h4>Best Deals</h4>
+                                <h2><span>Get It Now!</span><br><span>SARCASM</span></h2>
+                                <a href="{% url 'App:product_details' slug='the-importance-of-being-earnest' %}" class="primary-button">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add navigation arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="trending">
+    <div class="container">
+        <div class="wrapper">
+            <div class="sectop flexitem">
+                <h2><span class="circle"></span><span>Trending Products</span></h2>
+            </div>
+            <div class="column">
+                <div class="flexwrap">
+                    <div class="row products big">
+                        <div class="item">
+                            <div class="offer">
+                                <p>Offer ends at</p>
+                                <ul class="flexcenter" id="countdown">
+                                    <li id="days">0</li>
+                                    <li id="hours">0</li>
+                                    <li id="minutes">0</li>
+                                    <li id="seconds">0</li>
+                                </ul>
+                            </div>
+                            <div class="media">
+                                <div class="image">
+                                    <a href="{{ offer_product.get_absolute_url }}">
+                                        <img src="{{ offer_product.cover_image.url }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="hoverable">
+                                    <ul>
+                                        <li class="active"><a href="#"><i class="ri-eye-line"></i></a></li>
+                                        <li><a href="#"><i class="ri-heart-line"></i></a></li>
+                                        <li><a href="#"><i class="ri-shuffle-line"></i></a></li>
+                                    </ul>
+                                </div>
+                                {% if offer_product.on_sale or offer_product.category.on_sale %}
+                                    {% if offer_product.discount_price %}
+                                        {% if offer_product.on_sale %}
+                                        <p class="discount absolute rounded-full p-1 flexcenter">{{ offer_product.product_offer.all.0.discount }}%</p>
+                                        {% else %}
+                                        <p class="discount absolute rounded-full p-1 flexcenter">{{ offer_product.category.category_offer.all.0.discount }}%</p>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="content">
+                                <div class="rating">
+                                    <!-- <div class="stars"></div> -->
+                                    
+                                </div>
+                                <h3 class="main-links"><a href="{{ offer_product.get_absolute_url }}">{{ offer_product.title }}</a></h3>
+                                
+                                <div class="price">
+                                    {% if offer_product.on_sale or offer_product.category.on_sale %}
+                                    
+                                    {% if not offer_product.discount_price %}
+                                    <p class="text-xl">${{ offer_product.regular_price }}</p>
+                                    {% else %}
+                                    <p class="normal text-md">${{ offer_product.regular_price }}</p>
+                                    <p class="text-xl text-red-500">${{ offer_product.discount_price }}</p>
+                                    {% endif %}
+                                    
+                                    {% else %}
+                                    <p class="text-xl">${{ offer_product.regular_price }}</p>
+                                    {% endif %}
+                                </div>
+                                <div class="stock mini-text">
+                                    <div class="qty">
+                                        <span>Stock: <strong class="qty-available">{{ offer_product.product_stock }}</strong></span>
+                                        <span>Sold: <strong class="qty-available">999</strong></span>
+                                    </div>
+                                    <div class="bar">
+                                        <div class="available"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row products mini">
+                        
+                        {% for product in first_products %}
+                            
+                        <div class="item">
+                            <div class="media">
+                                <div class="thumbnail object-cover">
+                                    <a href="{{ product.get_absolute_url }}">
+                                        <img src="{{ product.cover_image.url }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="hoverable">
+                                    <ul>
+                                        <li class="active"><a href="{{ product.get_absolute_url }}"><i class="ri-eye-line"></i></a></li>
+                                        <li><a href="#"><i class="ri-heart-line"></i></a></li>
+                                        <li><a href="#"><i class="ri-shuffle-line"></i></a></li>
+                                    </ul>
+                                </div>
+                                {% if product.on_sale or product.category.on_sale %}
+                                    {% if product.discount_price %}
+                                        {% if product.on_sale %}
+                                        <p class="discount absolute rounded-full p-1 flexcenter">{{ product.product_offer.all.0.discount }}%</p>
+                                        {% else %}
+                                        <p class="discount absolute rounded-full p-1 flexcenter">{{ product.category.category_offer.all.0.discount }}%</p>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="content">
+                                <h3 class="main-links"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
+                                <div class="rating">
+                                    <!-- <div class="stars"></div> -->
+                                    
+                                </div>
+                                <div class="price">
+                                    {% if product.on_sale or product.category.on_sale %}
+                                    
+                                    {% if not product.discount_price %}
+                                    <p class="mini-text text-xl">${{ product.regular_price }}</p>
+                                    {% else %}
+                                    <p class="normal mini-text text-lg">${{ product.regular_price }}</p>
+                                    <p class="text-xl text-red-500">${{ product.discount_price }}</p>
+                                    {% endif %}
+                                    
+                                    {% else %}
+                                    <p class="mini-text text-xl">${{ product.regular_price }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                    </div>
+                    <div class="row products mini">
+                        <div class="row products mini">
+                            
+                            {% for product in second_products %}
+                                
+                            <div class="item">
+                                <div class="media">
+                                    <div class="thumbnail object-cover">
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <img src="{{ product.cover_image.url }}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="hoverable">
+                                        <ul>
+                                            <li class="active"><a href="{{ product.get_absolute_url }}"><i class="ri-eye-line"></i></a></li>
+                                            <li><a href="#"><i class="ri-heart-line"></i></a></li>
+                                            <li><a href="#"><i class="ri-shuffle-line"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    {% if product.on_sale or product.category.on_sale %}
+                                        {% if product.discount_price %}
+                                            {% if product.on_sale %}
+                                            <p class="discount absolute rounded-full p-1 flexcenter">{{ product.product_offer.all.0.discount }}%</p>
+                                            {% else %}
+                                            <p class="discount absolute rounded-full p-1 flexcenter">{{ product.category.category_offer.all.0.discount }}%</p>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                                <div class="content">
+                                    <h3 class="main-links"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
+                                    <div class="rating">
+                                        <!-- <div class="stars"></div> -->
+                                        
+                                    </div>
+                                    <div class="price">
+                                        {% if product.on_sale or product.category.on_sale %}
+                                        
+                                        {% if not product.discount_price %}
+                                        <p class="mini-text text-xl">${{ product.regular_price }}</p>
+                                        {% else %}
+                                        <p class="normal mini-text text-lg">${{ product.regular_price }}</p>
+                                        <p class="text-xl text-red-500">${{ product.discount_price }}</p>
+                                        {% endif %}
+                                        
+                                        {% else %}
+                                        <p class="mini-text text-xl">${{ product.regular_price }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                              
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Set the offer end date and time (in UTC)
+    const offerEndDateUTC = new Date("{{ category_offer.valid_to|date:'Y-m-d\TH:i:s' }}").getTime();
+    const offerEndDateIST = offerEndDateUTC + (5.5 * 60 * 60 * 1000);
+
+    // Update the countdown every 1 second
+    const x = setInterval(function() {
+        const now = new Date().getTime();
+        const timeLeft = offerEndDateIST - now;
+
+        // Calculate days, hours, minutes, and seconds
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        // Display the updated countdown
+        document.getElementById("days").innerHTML = days;
+        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+
+        // If the countdown is over, display a message
+        if (timeLeft < 0) { 
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "Offer has ended!";
+            document.getElementById("countdown").style.color = 'red';
+            document.getElementById("countdown").style.fontSize = '20px';
+        }
+    }, 1000); // Update every 1 second
+</script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        loop: true,
+    
+        // If we need navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next', // Selector for the next arrow
+            prevEl: '.swiper-button-prev', // Selector for the previous arrow
+        },
+        // If we need pagination
+        pagination: {
+        el: '.swiper-pagination',
+        },
+
+    });
+</script>
+{% endblock content %}

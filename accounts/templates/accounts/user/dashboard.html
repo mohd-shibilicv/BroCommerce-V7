@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+User Dashboard
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% block breadcrumb %}
+    <ol class="flex space-x-2 py-2 px-5">
+        <li><a href="{% url 'home:home' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li class="text-purple-700" aria-current="page"><a href="{% url 'account:dashboard' %}">Dashboard</a></li>
+    </ol>
+    {% endblock breadcrumb %}
+</div>
+
+<div class="flex container">
+    {% include 'accounts/user/user_sidebar.html' %}
+
+    <div class="block w-full mx-auto pl-3 pr-5 mt-16">
+        
+        <div
+            class="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-100 dark:bg-gray-800 w-full shadow-lg rounded">
+            <div class="rounded-t mb-0 px-0 border-0">
+                <div class="flex flex-wrap items-center px-4 py-2">
+                    <div class="relative w-full max-w-full flex-grow flex-1">
+                        <h3 class="font-semibold text-base text-gray-900 dark:text-white">Account</h3>
+                    </div>
+                    <div class="relative w-full max-w-full flex-grow flex-1 text-right">
+                        <button
+                            class="bg-gray-500 dark:bg-gray-100 text-white active:bg-gray-600 dark:text-white dark:active:text-gray-700 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"><a href="{% url 'account:user_profile' %}">See details</a></button>
+                    </div>
+                </div>
+                <div class="block w-full overflow-x-auto">
+                    <table class="items-center w-full bg-transparent border-collapse">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Profile</th>
+                                <th
+                                    class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Name</th>
+                                <th
+                                    class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Email</th>
+                                <th
+                                    class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Mobile</th>
+                                <th
+                                    class="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px">Joined On
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-gray-700 dark:text-gray-100">
+                                <th
+                                    class="border-t-0 px-4 flex justify-center align-middle items-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                    <img src="{{ request.user.profile.url }}" alt="User Profile" style="width: 50px; height: 50px;"></th>
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ request.user.username }}</td>
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ request.user.email }}</td>
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ request.user.mobile }}</td>
+                                <td
+                                    class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <div class="flex items-center">
+                                        <span>{{ request.user.created|date:'F d, Y' }}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                <div class="w-full overflow-x-auto">
+                    <div class="flex flex-wrap items-center px-4 py-2 bg-gray-200 dark:bg-gray-800">
+                        <div class="relative w-full max-w-full flex-grow flex-1">
+                            <h3 class="font-semibold text-base text-gray-900 dark:text-white">Orders</h3>
+                        </div>
+                        <div class="relative w-full max-w-full flex-grow flex-1 text-right">
+                            <button
+                                class="bg-gray-500 dark:bg-gray-100 text-white active:bg-gray-600 dark:text-white dark:active:text-gray-700 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"><a href="{% url 'account:user_orders' %}">See all</a></button>
+                        </div>
+                    </div>
+                    <table class="w-full">
+                        <thead>
+                            <tr
+                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                <th class="px-4 py-3">Order No.</th>
+                                <th class="px-4 py-3">Profile</th>
+                                <th class="px-4 py-3">Amount</th>
+                                <th class="px-4 py-3">Method</th>
+                                <th class="px-4 py-3">Status</th>
+                                <th class="px-4 py-3">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            
+                            {% for order in orders %}
+                            <tr
+                                class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3 text-sm">{{ order.order_key }}</td>
+                                <td class="px-4 py-3">
+                                    <div class="flex items-center text-sm">
+                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                            <img class="object-cover w-full h-full rounded-full"
+                                            src="{{ order.user.profile.url }}"
+                                            alt="User Profile" loading="lazy" />
+                                            <div class="absolute inset-0 rounded-full shadow-inner"
+                                            aria-hidden="true"></div>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold">{{ order.user.name }}</p>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">{{ order.user.email }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm">$ {{ order.total_paid }}</td>
+                                <td class="px-4 py-3 text-sm">{{ order.payment_option|upper }}</td>
+
+                                {% if order.order_status == 'Paid' %}
+                                <td class="px-4 py-3 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                        {{ order.order_status }} </span>
+                                </td>
+                                {% elif order.order_status == 'Cancelled' %}
+                                <td class="px-4 py-3 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-full dark:bg-yellow-700 dark:text-yellow-100">
+                                        {{ order.order_status }} </span>
+                                </td>
+                                {% elif  order.order_status == 'Returned' %}
+                                <td class="px-4 py-3 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-indigo-700 bg-indigo-100 rounded-full dark:bg-indigo-700 dark:text-indigo-100">
+                                        {{ order.order_status }} </span>
+                                </td>
+                                {% else %}
+                                <td class="px-4 py-3 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
+                                        {{ order.delivery_status }} </span>
+                                </td>
+                                {% endif %}
+
+                                <td class="px-4 py-3 text-sm">{{ order.created|date:'F d, Y' }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr class="bg-white border-b border-t dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td colspan="8" class="w-4 p-10">
+                                    <div class="flex justify-center flex-col gap-6 text-gray-800 text-xl items-center">
+                                        Currently you have no orders.
+                                        <a href="{% url 'App:all_products' %}" class="bg-gray-700 hover:bg-gray-800 text-white font-medium rounded-lg py-2 px-4 inline-flex items-center focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                                            Order Now
+                                            <svg class="w-4 h-4 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        {% if request.user.referral_link %}
+        <div id="cta-container" class="container my-10 bg-gray-200 pt-10 pb-10 rounded-md shadow-md text-dark text-center">
+            <p class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Share the Love! Invite your friends using your referral link:</p>
+            <div class="flex flex-col items-center justify-center mb-4">
+                <span id="referral-link" class="mr-2 break-all text-xs text-gray-200">{{ request.scheme }}://{{ current_site.domain }}{{ user.referral_link }}</span>
+                
+                <button onclick="copyToClipboard()" class="inline-flex items-center justify-center p-5 text-base font-medium text-gray-800 rounded-lg bg-gray-50 hover:text-gray-900 hover:bg-gray-300 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z"></path></svg>                                             
+                    <span class="w-full mx-2">Copy your Referral Link</span>
+                </button> 
+
+            </div>
+            <p class="mb-5 text-base text-gray-900 sm:text-lg dark:text-gray-400">For every successful referral, you and your friend will both receive $100!</p>
+            <p class="text-sm">(Rewards will be credited upon successful sign-up)</p>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+{% block footer %}{% endblock footer %}
+
+<script>
+    function copyToClipboard() {
+        /* Get the text field */
+        var referralLink = document.getElementById("referral-link");
+    
+        /* Select the text field */
+        var range = document.createRange();
+        range.selectNode(referralLink);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+    
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+    
+        /* Deselect the text field to avoid highlighting */
+        window.getSelection().removeAllRanges();
+    
+        $('<div class="mt-5 text-md">Referral link copied to clipboard!</div>').insertBefore('#referral-link').delay(1000).fadeOut(function() {
+            $(this).remove();
+        });
+    }
+</script>
+<script>
+    const modal = document.querySelector('.main-modal');
+    const closeButton = document.querySelectorAll('.modal-close');
+
+    const modalClose = () => {
+        modal.classList.remove('fadeIn');
+        modal.classList.add('fadeOut');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 500);
+    }
+
+    const openModal = () => {
+        modal.classList.remove('fadeOut');
+        modal.classList.add('fadeIn');
+        modal.style.display = 'flex';
+    }
+
+    for (let i = 0; i < closeButton.length; i++) {
+
+        const elements = closeButton[i];
+
+        elements.onclick = (e) => modalClose();
+
+        modal.style.display = 'none';
+
+        window.onclick = function (event) {
+            if (event.target == modal) modalClose();
+        }
+    }
+</script>
+{% endblock content %}

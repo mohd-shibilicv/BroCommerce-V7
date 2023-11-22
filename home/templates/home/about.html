@@ -1,0 +1,27 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}
+    About us | BroCommerce
+{% endblock title %}
+
+{% block content %}
+<div class="py-12 sm:py-24">
+    <div class="container mx-auto flex flex-col items-center">
+        <div class="w-11/12 sm:w-2/3 lg:flex justify-center items-center flex-col mb-5 sm:mb-10">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-gray-800 font-black leading-7 md:leading-10">
+                About BroCommerce
+            </h1>
+            <p class="mt-5 sm:mt-10 lg:w-10/12 text-gray-400 font-normal text-center text-sm sm:text-lg">
+                Welcome to BroCommerce, your online bookstore dedicated to bringing you the finest literary experiences. We are a team of passionate bookworms who believe in the power of words and stories. Our mission is to connect readers with the books they love and introduce them to new worlds, adventures, and ideas. Here's a little about us and what sets us apart:
+            </p>
+        </div>
+        <a href="{% url 'home:contact' %}" class="flex justify-center items-center">
+            <button class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 lg:text-xl lg:font-bold rounded text-white px-4 sm:px-10 border border-indigo-700 py-2 sm:py-4 text-sm">Get to Know Us</button>
+        </a>
+    </div>
+</div>
+
+{% endblock content %}
+    
+    
