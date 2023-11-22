@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+User Dashboard
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% block breadcrumb %}
+    <ol class="flex space-x-2 py-2 px-5">
+        <li><a href="{% url 'home:home' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li><a href="{% url 'account:dashboard' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Dashboard</a></li>
+        <li class="text-purple-700" aria-current="page"><a href="{% url 'wallet:user_wallet' %}">Wallet</a></li>
+    </ol>
+{% endblock breadcrumb %}
+</div>
+
+<div class="flex container">
+    {% include 'accounts/user/user_sidebar.html' %}
+
+    <div class="container m-10">
+        <div class="flex flex-col">
+            <div class="w-full p-5 mt-10 mb-5">
+                <h1 class="text-2xl font-bold mb-4">Wallet Balance</h1>
+                <div class="bg-white p-4 border rounded shadow">
+                    <p class="text-3xl font-semibold text-green-500">$ {{ user_wallet.balance }}</p>
+                </div>
+                <!-- <div class="m-10 flex justify-center items-center">
+                    <a href="{% url 'wallet:deposit_view' %}" class="focus:outline-none px-4 bg-green-400 p-3 ml-3 rounded-lg text-white hover:bg-green-500">Deposit</a>
+                    <a href="{% url 'wallet:withdraw_view' %}" class="focus:outline-none px-4 bg-red-500 p-3 ml-3 rounded-lg text-white hover:bg-red-600">Withdraw</a>
+                </div> -->
+            </div>
+            <div class="container w-full mb-10">
+                <div class="flex justify-between">
+                    <h1 class="text-2xl font-bold mb-4">Transaction History</h1>
+                    
+                    {% if user_transactions %}
+                    <a href="{% url 'wallet:clear_transactions_history' %}" class="mb-4 focus:outline-none bg-indigo-500 p-3 ml-3 rounded-lg text-white hover:bg-indigo-600">Clear</a>
+                    {% endif %}
+                </div>
+                <div class="overflow-hidden">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-200 border-b">
+                            <tr>
+                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    ID
+                                </th>
+                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Name
+                                </th>
+                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Type
+                                </th>
+                                
+                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Amount
+                                </th>
+                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Created at
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for transaction in user_transactions %}                            
+                            <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ transaction.id }}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                    {{ transaction.user.username }}
+                                </td>
+                                
+                                {% if transaction.transaction_type == 'Withdraw' %}
+                                <td class="px-3 py-4">
+                                    <span class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ transaction.transaction_type }}</span>
+                                </td>
+                                {% elif transaction.transaction_type == 'Return' %}
+                                <td class="px-3 py-4">
+                                    <span class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ transaction.transaction_type }}</span>
+                                </td>
+                                {% else %}
+                                <td class="px-3 py-4">
+                                    <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ transaction.transaction_type }}</span>
+                                </td>
+                                {% endif %}
+                                
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                    $ {{ transaction.amount }}
+                                </td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-wrap">
+                                    {{ transaction.timestamp|date:'F m, Y, f A' }}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                                <td colspan="5" class="p-5 text-lg text-center">
+                                    No Transaction found
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% block footer %}{% endblock footer %}
+{% endblock content %}

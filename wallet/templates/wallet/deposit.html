@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load tailwind_filters %}
+
+{% block title %}
+    Deposit
+{% endblock title %}
+
+{% block content %}
+{% block breadcrumb %}
+<ol class="flex space-x-2 py-5 px-5">
+    <li><a href="{% url 'home:home' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+    <li><a href="{% url 'account:dashboard' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Dashboard</a></li>
+    <li><a href="{% url 'wallet:user_wallet' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Wallet</a></li>
+    <li class="text-purple-700" aria-current="page"><a href="{% url 'wallet:deposit_view' %}">Deposit</a></li> 
+</ol>
+{% endblock breadcrumb %}
+<div class="max-w-lg mx-auto mt-12 mb-10 pb-10">
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="flex flex-col mt-7">    
+            <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-600 px-3 py-2 rounded-xl text-white font-semibold">Deposit</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
