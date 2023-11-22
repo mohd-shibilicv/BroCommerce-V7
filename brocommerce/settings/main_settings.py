@@ -4,6 +4,11 @@ from pathlib import Path
 import django
 from django.utils.encoding import force_str
 
+import environ
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
 from brocommerce import jazzmin
 
 django.utils.encoding.force_text = force_str
@@ -12,9 +17,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 JAZZMIN_SETTINGS = jazzmin.JAZZMIN_SETTINGS
 
-SECRET_KEY = "django-insecure-1n1j0to@nm!9r5tso!xbbg$9ec+a$tz=os85ps4cfl80&q+3%v"
+READ_DOT_ENV_FILE = env.bool('READ_DOT_ENV_FILE', default=False)
+if READ_DOT_ENV_FILE:
+    environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-DEBUG = True
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env('SECRET_KEY')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ["*"]
 
@@ -111,11 +122,11 @@ WSGI_APPLICATION = "brocommerce.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "BroCommerce_V7",
-        "USER": "BroCommerce_V7",
-        "PASSWORD": "brocommercev7",
-        "HOST": "localhost",
-        "PORT": "5432",
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
