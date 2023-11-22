@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+User Invoices
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% block breadcrumb %}
+    <ol class="flex space-x-2 py-2 px-5">
+        <li><a href="{% url 'home:home' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li><a href="{% url 'account:dashboard' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Dashboard</a></li>
+        <li class="text-purple-700" aria-current="page"><a href="{% url 'orders:invoices' %}">Invoices</a></li>
+    </ol>
+    {% endblock breadcrumb %}
+</div>
+<div class="flex container">
+    {% include 'accounts/user/user_sidebar.html' %}
+
+    <div class="block w-full mx-auto px-10">
+        <!-- <form method="get" class="sorting-form flex items-center justify-end mx-10">
+            <label for="sort" class="mr-2">Sort by:</label>
+            <div class="relative">
+                <select name="sort" id="sort" onchange="this.form.submit()"  id="orders" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="default" {% if sort_param == 'default' %}selected{% endif %}>Default</option>
+                    <option value="paid" {% if sort_param == 'paid' %}selected{% endif %}>Paid</option>
+                    <option value="pending" {% if sort_param == 'pending' %}selected{% endif %}>Pending</option>
+                    <option value="cancelled" {% if sort_param == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                </select>
+            </div>
+        </form> -->
+        <h1 class="text-3xl text-center font-semibold mb-16">My Invoices</h1>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="p-4">
+                            <div class="flex items-center">
+                                <p></p>
+                            </div>
+                        </th>
+                        <th scope="col" class="px-3 py-3">
+                            Invoice number
+                        </th>
+                        <th scope="col" class="px-3 py-3">
+                            Order id
+                        </th>
+                        <th scope="col" class="px-3 py-3">
+                            Issued on
+                        </th>
+                        <th scope="col" class="px-3 py-3">
+                            Due to
+                        </th>
+                        <th scope="col" class="px-3 py-3">
+                            Total amount
+                        </th>
+                        <th scope="col" class="px-3 py-3">
+                            Address
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for invoice in invoices %}
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="w-4 p-4">
+                            <a href="{% url 'orders:delete_invoice' invoice.id %}">
+                                <div class="flex items-center">
+                                    <iv class="mdi mdi-close mr-1 text-red-500"></i>
+                                </div>
+                            </a>
+                        </td>
+                        <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ invoice.invoice_number }}
+                        </th>
+                        <td class="px-3 py-4">
+                            {{ invoice.order.order_key }}
+                        </td>
+                        <td class="px-3 py-4">
+                            {{ invoice.issued_date|date:"d, F Y" }}
+                        </td>
+                        <td class="px-3 py-4">
+                            {{ invoice.due_date }}
+                        </td>
+                        <td class="px-3 py-4">
+                            $ {{ invoice.total_amount }}
+                        </td>
+                        <td class="px-3 py-4">
+                            {{ invoice.order.address1 }}
+                        </td>
+                        
+                        <td class="px-3 py-4 flex mx-auto items-center justify-center">
+                            <a href="{% url 'orders:invoice_details' invoice.id %}" class="font-medium text-blue-600 dark:text-blue-500 mr-2 hover:underline">View</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr
+                        class="bg-white border-b border-t dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td colspan="8" class="w-4 p-10">
+                            <div class="flex justify-center flex-col gap-6 text-gray-800 text-xl items-center">
+                                Currently you have no orders.
+                                <a href="{% url 'App:all_products' %}" class="bg-blue-700 hover:bg-blue-800 text-white font-medium rounded-lg py-2 px-4 inline-flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    Order Now
+                                    <svg class="w-4 h-4 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            
+            {% if invoices %}   
+            <nav class="flex items-center justify-between pt-4 pb-4 m-10" aria-label="Table navigation">
+                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing Page <span
+                        class="font-semibold text-gray-900 dark:text-white">{{ invoices.number }} </span> of <span
+                        class="font-semibold text-gray-900 dark:text-white">{{ invoices.paginator.num_pages }}</span></span>
+                <ul class="inline-flex -space-x-px text-sm h-8">
+                    {% if invoices.has_previous %}
+                    <li>
+                        <a href="?page=1"
+                            class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">First
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?page={{ invoices.previous_page_number }}"
+                            class="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!-- <li>
+                        <span href="#" class="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ orders.number }}</span>
+                    </li> -->
+                    <li>
+                        <a href="#" aria-current="page"
+                            class="flex items-center justify-center px-3 mx-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 rounded-full hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">{{ invoices.number }}</a>
+                    </li>
+                    <!--- <li>
+                        <a href="#"
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                    </li>
+                    <li>
+                        <a href="#" aria-current="page"
+                            class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+                    </li> -->
+                    {% if invoices.has_next %}
+                    <li>
+                        <a href="?page={{ invoices.next_page_number }}"
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?page={{ invoices.paginator.num_pages }}"
+                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Last
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+
+{% block footer %}{% endblock footer %}
+{% endblock content %}

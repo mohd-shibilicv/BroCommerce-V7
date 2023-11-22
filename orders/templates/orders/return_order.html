@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load tailwind_filters %}
+
+{% block title %}
+    Return Order
+{% endblock title %}
+
+{% block content %}
+{% block breadcrumb %}
+<ol class="flex space-x-2 py-5 px-5">
+    <li><a href="{% url 'home:home' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+    <li><a href="{% url 'account:dashboard' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Dashboard</a></li>
+    <li><a href="{% url 'account:user_orders' %}" class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Orders</a></li>
+    <li class="text-purple-700" aria-current="page"><a href=".">Order Return</a></li> 
+</ol>
+{% endblock breadcrumb %}
+<div class="max-w-lg mx-auto mt-12 mb-10 pb-10">
+    <p class="m-10 text-xl font-semibold">We will be deducting 20% percentage of the amount that you've paid for this order. which is 80% of ${{ total_paid }} = ${{ refund_amount }}</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="flex flex-col mt-7">    
+            <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-600 px-3 py-2 rounded-xl text-white font-semibold">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

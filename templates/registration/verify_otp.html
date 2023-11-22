@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load tailwind_filters %}
+
+{% block title %}
+Verify OTP
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% block breadcrumb %}
+    <ol class="flex space-x-2 py-5 px-5">
+        <li><a href="{% url 'home:home' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li><a href="{% url 'account:login' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Login</a></li>
+        <li><a href="{% url 'account:otp_login' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">OTP Login</a></li>
+        <li class="text-purple-700" aria-current="page"><a href="{% url 'account:verify_otp' %}">Verify OTP</a></li>
+    </ol>
+    {% endblock breadcrumb %}
+</div>
+<div class="max-w-lg mx-auto mt-12 mb-10">
+    <form method="post">
+        {% csrf_token %}
+        <label for="otp-code" class="block text-gray-700 text-sm font-bold mb-2">
+            Otp<span class="asteriskField">*</span>
+        </label>
+        <input type="number" name="otp"
+            class="mb-2 numberinput w-full px-4 block leading-normal bg-white text-gray-700 py-2 border rounded-lg focus:outline-none border-indigo-500 appearance-none"
+            placeholder="OTP Verification code" id="otp-code" required>
+
+        {% if error_message %}
+        <p id="error_1_id_otp" class="text-red-500 text-xs italic"><strong>{{ error_message }}</strong></p>
+        {% else %}
+        {% endif %}
+        <div class="flex flex-col mt-7">
+            <button type="submit"
+                class="w-full bg-indigo-500 hover:bg-indigo-600 px-3 py-2 rounded-xl text-white font-semibold">Verify</button>
+            <br />
+        </div>
+    </form>
+    <a href="{% url 'account:resend_otp' %}" class="text-center hover:text-indigo-600">Resend OTP</a>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,59 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}BroCommerce - Low Price Books{% endblock title %}</title>
+  <link rel="shortcut icon" href="{% static 'images/read-book-icon.svg' %}" type="image/x-icon">
+  <!-- Roboto font -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind styles-->
+  {% tailwind_css %}
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+
+  <script src="https://unpkg.com/htmx.org@1.9.7" integrity="sha384-EAzY246d6BpbWR7sQ8+WEm40J8c3dHFsqC58IgPlh4kMbRRI6P6WA+LA/qGAyAu8" crossorigin="anonymous"></script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+
+  <!-- Drift Image Zoom Script -->
+  <!-- <script src="{% static 'js/Drift.min.js' %}"></script> -->
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
+</head>
+
+<body>
+  <div class="p-0">
+    {% include 'navbar.html' %}
+  </div>
+
+  {% include 'alert.html' %}
+  <div id="content">
+    {% block content %}
+
+    {% endblock content %}
+  </div>
+  
+  {% block footer %}
+  {% include 'footer.html' %}
+  {% endblock footer %}
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+{% block alerts %}
+
+<div>
+    {% for message in messages %}
+    {% if message.tags == 'error' %}
+    <div id="alertbox">
+        <div class="bg-red-500 flex items-center text-white text-sm font-bold px-4 py-3 relative"
+        role="alert">
+            <i class="ri-error-warning-line mx-3"></i>
+            <p>{{ message|safe }}</p>
+
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 closealertbutton">
+                <svg class="fill-current h-6 w-6 text-white" role="button" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20">
+                    <title>Close</title>
+                    <path
+                        d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+            </span>
+        </div>
+    </div>
+    {% elif message.tags == 'info'  %}
+    <div id="alertbox">
+        <div class="bg-indigo-500 flex items-center text-white text-sm font-bold px-4 py-3 relative"
+        role="alert">
+            <i class="ri-error-warning-line mx-3"></i>
+            <p>{{ message|safe }}</p>
+
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 closealertbutton">
+                <svg class="fill-current h-6 w-6 text-white" role="button" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20">
+                    <title>Close</title>
+                    <path
+                        d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+            </span>
+        </div>
+    </div>
+    {% else %}
+    <div id="alertbox">
+        <div class="bg-green-500 flex items-center text-white text-sm font-bold px-4 py-3 relative"
+            role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-check-circle w-5 h-5 mx-2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <p>{{ message|safe }}</p>
+
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 closealertbutton">
+                <svg class="fill-current h-6 w-6 text-white" role="button" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20">
+                    <title>Close</title>
+                    <path
+                        d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+            </span>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<script>
+    $(".closealertbutton").click(function (e) {
+        // $('.alertbox')[0].hide()
+        // e.preventDefault();
+        pid = $(this).parent().parent().hide(500)
+        console.log(pid)
+        // $(".alertbox", this).hide()
+    })
+</script>
+{% endblock alerts %}
