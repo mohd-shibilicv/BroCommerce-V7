@@ -1,0 +1,392 @@
+{% extends 'base.html' %}
+
+{% load tailwind_filters %}
+
+{% load static %}
+
+{% block title %}
+Payment
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% block breadcrumb %}
+    <ol class="flex space-x-2 py-5 px-5">
+        <li><a href="{% url 'home:home' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li><a href="{% url 'App:all_products' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Shop</a></li>
+        <li><a href="{% url 'cart:view_cart' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Cart</a></li>
+        <li><a href="{% url 'checkout:delivery_choices' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Delivery choices</a></li>
+        <li><a href="{% url 'checkout:delivery_address' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Delivery address</a></li>
+        <li class="text-purple-700" aria-current="page"><a href="{% url 'checkout:payment_selection' %}">Payment</a></li>
+    </ol>
+    {% endblock breadcrumb %}
+</div>
+{% block stepper %}
+<ol
+    class="relative w-full flex gap-10 justify-center mx-auto mt-10 text-gray-500 dark:border-gray-700 dark:text-gray-400">
+    <li class="mb-10 ml-6 flex items-center">
+        <span
+            class="relative flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
+            <svg class="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 5.917 5.724 10.5 15 1.5" />
+            </svg>
+        </span>
+        <div>
+            <h3 class="font-medium leading-tight">Cart</h3>
+            <p class="text-sm">Review Cart Items</p>
+        </div>
+    </li>
+    <p class="text-green-400">--------></p>
+    <li class="mb-10 ml-6 flex items-center">
+        <span
+            class="relative flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
+            <svg class="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 5.917 5.724 10.5 15 1.5" />
+            </svg>
+        </span>
+        <div>
+            <h3 class="font-medium leading-tight">Delivery Options</h3>
+            <p class="text-sm">Choose shipping option</p>
+        </div>
+    </li>
+    <p class="text-green-400">--------></p>
+    <li class="mb-10 ml-6 flex items-center">
+        <span
+            class="relative flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
+            <svg class="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 5.917 5.724 10.5 15 1.5" />
+            </svg>
+        </span>
+        <div>
+            <h3 class="font-medium leading-tight">Shipping Address</h3>
+            <p class="text-sm">Choose shipping address</p>
+        </div>
+    </li>
+    <p class="text-green-400">--------></p>
+    <li class="mb-10 ml-6 flex items-center">
+        <span
+            class="relative flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
+            <svg class="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 5.917 5.724 10.5 15 1.5" />
+            </svg>
+        </span>
+        <div>
+            <h3 class="font-medium leading-tight">Confirmation</h3>
+            <p class="text-sm">Payment confirmation</p>
+        </div>
+    </li>
+</ol>
+{% endblock stepper %}
+<div class="container min-w-screen min-h-screen bg-gray-50 py-5">
+    <div class="w-full bg-white border-t border-b border-gray-200 px-5 py-10 text-gray-800">
+        <div class="w-full">
+            <div class="-mx-3 md:flex items-start">
+                <div class="px-3 md:w-7/12 lg:pr-10">
+
+                    {% for item in cart %}
+                    {% with product=item.product %}
+                    <div class="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6">
+                        <div class="w-full flex items-center">
+                            <div class="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
+                                <img src="{{ product.cover_image.url }}" alt="">
+                            </div>
+                            <div class="flex-grow pl-3">
+                                <h6 class="font-semibold uppercase text-gray-600">{{ product.title }}</h6>
+                                <p class="text-gray-500">$ {{ product.regular_price }} x {{ item.quantity }}</p>
+                                <p class="text-gray-500">Available stock: <span class="text-md">{{ product.product_stock }}</span></p>
+                            </p>
+                            </div>
+                            <div>
+
+                                
+                                <span class="font-semibold text-gray-600 text-xl">${{ item.total_price }}</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    {% endwith %}
+                    {% endfor %}
+                    <div class="mb-6 pb-6 border-b border-gray-200 text-gray-800">
+                    
+                        <div class="w-full flex mb-3 items-center">
+                            {% if cart.coupon %}
+                            {% with code=cart.coupon.code discount=cart.coupon.discount %}
+                            <div class="flex-grow">
+                                <span class="text-gray-600">New Subtotal with ({{ cart.coupon.discount }}% discount)</span>
+                            </div>
+                            <div class="pl-3">
+                                <span class="font-semibold">$ <span id="subtotal">{{ cart.get_subtotal_price_after_discount|floatformat:'2' }}</span>
+                            </div>
+                            {% endwith %}
+                            {% else %}
+                            <div class="flex-grow">
+                                <span class="text-gray-600">Subtotal</span>
+                            </div>
+                            <div class="pl-3">
+                                <span class="font-semibold">${{ cart.get_subtotal_price }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="w-full flex items-center mb-3">
+                            <div class="flex-grow">
+                                <span class="text-gray-600">Shipping</span>
+                            </div>
+                            <div class="pl-3">
+                                <span class="font-semibold">$ {{ cart.get_delivery_price }}</span>
+                            </div>
+                        </div>
+                        <div class="w-full flex items-center">
+                            <div class="flex-grow">
+                                <span class="text-gray-600">Taxes (VAT)</span>
+                            </div>
+                            <div class="pl-3">
+                                <span class="font-semibold">$ 2.99</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-6 pb-6 border-b border-gray-200 md:border-none text-gray-800 text-xl">
+                        <div class="w-full flex items-center">
+                            <div class="flex-grow">
+                                <span class="text-gray-600">Total</span>
+                            </div>
+                            <div class="pl-3">
+                                <span class="font-semibold text-gray-400 text-sm">USD</span> <span
+                                    class="font-semibold">
+                                    ${{ cart.get_total_price_with_tax }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-3 md:w-5/12">
+
+                    <div
+                        class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-3 text-gray-800 font-light mb-6">
+                        <div class="w-full flex mb-3 items-center">
+                            <div class="w-32">
+                                <span class="text-gray-600 font-semibold">Contact</span>
+                            </div>
+                            <div class="flex-grow pl-3">
+                                <span>{{ address.full_name }}</span>
+                            </div>
+                        </div>
+                        <div class="w-full flex items-center mb-3">
+                            <div class="w-32">
+                                <span class="text-gray-600 font-semibold">Billing Address</span>
+                            </div>
+                            <div class="flex-grow pl-3">
+                                <span>{{ address.address_line }}</span>
+                            </div>
+                        </div>
+                        <div class="w-full flex items-center mb-3">
+                            <div class="w-32">
+                                <span class="text-gray-600 font-semibold">Phone</span>
+                            </div>
+                            <div class="flex-grow pl-3">
+                                <span>{{ address.phone }}</span>
+                            </div>
+                        </div>
+                        <div class="w-full flex items-center mb-3">
+                            <div class="w-32">
+                                <span class="text-gray-600 font-semibold">Town / City</span>
+                            </div>
+                            <div class="flex-grow pl-3">
+                                <span>{{ address.town_city }}</span>
+                            </div>
+                        </div>
+                        <div class="w-full flex items-center">
+                            <div class="w-32">
+                                <span class="text-gray-600 font-semibold">Postal code</span>
+                            </div>
+                            <div class="flex-grow pl-3">
+                                <span>{{ address.postcode }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div
+                        class="w-full mx-auto rounded-lg bg-white border border-gray-200 text-gray-800 font-light mb-6">
+                        <div class="w-full p-3 border-b border-gray-200">
+                            <div class="mb-5">
+                                <label for="type1" class="flex items-center cursor-pointer">
+                                    <input type="radio" class="form-radio h-5 w-5 text-indigo-500" name="type"
+                                        id="type1" checked>
+                                    <img src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png"
+                                        class="h-6 ml-3">
+                                </label>
+                            </div>
+                            <div>
+                                <div class="mb-3">
+                                    <label class="text-gray-600 font-semibold text-sm mb-2 ml-1">Name on card</label>
+                                    <div>
+                                        <input
+                                            class="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
+                                            placeholder="John Smith" type="text" />
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="text-gray-600 font-semibold text-sm mb-2 ml-1">Card number</label>
+                                    <div>
+                                        <input
+                                            class="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
+                                            placeholder="0000 0000 0000 0000" type="text" />
+                                    </div>
+                                </div>
+                                <div class="mb-3 -mx-2 flex items-end">
+                                    <div class="px-2 w-1/4">
+                                        <label class="text-gray-600 font-semibold text-sm mb-2 ml-1">Expiration
+                                            date</label>
+                                        <div>
+                                            <select
+                                                class="form-select w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer">
+                                                <option value="01">01 - January</option>
+                                                <option value="02">02 - February</option>
+                                                <option value="03">03 - March</option>
+                                                <option value="04">04 - April</option>
+                                                <option value="05">05 - May</option>
+                                                <option value="06">06 - June</option>
+                                                <option value="07">07 - July</option>
+                                                <option value="08">08 - August</option>
+                                                <option value="09">09 - September</option>
+                                                <option value="10">10 - October</option>
+                                                <option value="11">11 - November</option>
+                                                <option value="12">12 - December</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="px-2 w-1/4">
+                                        <select
+                                            class="form-select w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer">
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2025">2025</option>
+                                            <option value="2026">2026</option>
+                                            <option value="2027">2027</option>
+                                            <option value="2028">2028</option>
+                                            <option value="2029">2029</option>
+                                        </select>
+                                    </div>
+                                    <div class="px-2 w-1/4">
+                                        <label class="text-gray-600 font-semibold text-sm mb-2 ml-1">Security
+                                            code</label>
+                                        <div>
+                                            <input
+                                                class="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
+                                                placeholder="000" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full p-3">
+                            <label for="type2" class="flex items-center cursor-pointer">
+                                <input type="radio" class="form-radio h-5 w-5 text-indigo-500" name="type" id="type2">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="80"
+                                    class="ml-3" />
+                            </label>
+                        </div>
+                        <div class="w-full p-3">
+                            <label for="type3" class="flex items-center cursor-pointer">
+                                <input type="radio" class="form-radio h-5 w-5 text-indigo-500" name="type" id="type3">
+                                <p class=" mx-3 text-gray-600 text-lg font-medium">Cash on Delivery</p>
+                            </label>
+                        </div>
+                    </div> -->
+                    <div class="m-5 px-10" id="paypal-button-container"></div>
+                    <p id="result-message"></p>
+                    <div class='flex flex-col gap-5'>
+                        <div>
+                            <a href="{% url 'checkout:cod_payment_complete' %}">
+                                <button
+                                    class="block w-full max-w-xs mx-auto bg-indigo-600 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold">
+                                    Cash on Delivery
+                                </button>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="{% url 'checkout:wallet_payment_complete' %}">
+                                <button
+                                    class="block w-full max-w-xs mx-auto bg-gray-600 hover:bg-gray-700 focus:bg-gray-700 text-white rounded-lg px-3 py-2 font-semibold">
+                                    Checkout with wallet
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AZxmiYdjz_BkDYAtPkm2z73UfODEkJn1k_1591OlodkTEzEKT2PXzIY6sy3FChurOOCHl1_fsTbDnnw7"
+    data-sdk-integration-source="'button-factory">
+    </script>
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function initPayPalButton() {
+        paypal.Buttons({
+            style: {
+                shape: 'rect',
+                color: 'gold',
+                layout: 'vertical',
+                label: 'paypal',
+            },
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        'amount': {
+                            'currency_code': 'USD',
+                            'value': '{{ cart.get_total_price_with_tax }}'
+                        }
+                    }]
+                });
+            },
+            onApprove: function (data) {
+                var url = '{% url "checkout:payment_complete" %}'
+                return fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: JSON.stringify({
+                        orderID: data.orderID
+                    })
+                }).then(function () {
+                    location.href = '{% url "checkout:payment_successful" %}';
+                })
+            },
+        }).render('#paypal-button-container');
+    }
+    initPayPalButton();
+</script>
+{% endblock content %}

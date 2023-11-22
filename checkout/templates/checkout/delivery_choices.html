@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Delivery Choices
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    {% block breadcrumb %}
+    <ol class="flex space-x-2 py-2 px-5">
+        <li><a href="{% url 'home:home' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li><a href="{% url 'App:all_products' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Shop</a></li>
+        <li><a href="{% url 'cart:view_cart' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Cart</a></li>
+        <li class="text-purple-700" aria-current="page"><a href="{% url 'checkout:delivery_choices' %}">Delivery choices</a>
+        </li>
+    </ol>
+    {% endblock breadcrumb %}
+</div>
+<div class="bg-gray-100 pt-20 pb-10">
+    {% block stepper %}
+
+    <ol class="relative w-full flex gap-10 justify-center mx-auto mb-5 text-gray-500 border-r border-gray-500 dark:border-gray-700 dark:text-gray-400">
+        <li class="mb-10 ml-6 flex items-center">
+            <span
+                class="relative flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
+                <svg class="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 5.917 5.724 10.5 15 1.5" />
+                </svg>
+            </span>
+            <div>
+                <h3 class="font-medium leading-tight">Cart</h3>
+                <p class="text-sm">Review Cart Items</p>
+            </div>
+        </li>
+        <p class="text-green-400">--------></p>
+        <li class="mb-10 ml-6 flex items-center">
+            <span
+                class="relative flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
+                <svg class="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 5.917 5.724 10.5 15 1.5" />
+                </svg>
+            </span>
+            <div>
+                <h3 class="font-medium leading-tight">Delivery Options</h3>
+                <p class="text-sm">Choose shipping option</p>
+            </div>
+        </li>
+        <p>--------></p>
+        <li class="mb-10 ml-6 flex items-center">
+            <span
+                class="relative flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                <svg class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                    <path
+                        d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
+                </svg>
+            </span>
+            <div>
+                <h3 class="font-medium leading-tight">Shipping Address</h3>
+                <p class="text-sm">Choose shipping address</p>
+            </div>
+        </li>
+        <p>--------></p>
+        <li class="mb-10 ml-6 flex items-center">
+            <span
+                class="relative flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                <svg class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                    <path
+                        d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z" />
+                </svg>
+            </span>
+            <div>
+                <h3 class="font-medium leading-tight">Confirmation</h3>
+                <p class="text-sm">Payment confirmation</p>
+            </div>
+        </li>
+    </ol>
+    {% endblock stepper %}
+    <h1 class="mb-10 text-center text-3xl font-medium">Delivery Options</h1>
+    <div class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
+        <div class="block w-full mx-auto">
+            <h3 class="mb-5 text-lg font-medium text-gray-900 dark:text-white">Which Delivery option that you prefer?</h3>
+            <ul class="grid w-1/2 gap-6 md:grid-rows-2">
+                
+                {% for delivery_option in delivery_options %}
+                <li data-index="{{ delivery_option.id }}" style="width: 500px;">
+                    <input type="radio" id="{{ delivery_option.id }}" name="deliveryOption" {% if delivery_option.delivery_price == cart.get_delivery_price %}checked{% endif %} value="{{ delivery_option.id }}" class="hidden peer"
+                    required>
+                    <label for="{{ delivery_option.id }}"
+                    class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                                <div class="w-full text-lg font-semibold">{{ delivery_option.delivery_name }}</div>
+                                <div class="w-full">Delivery Timeframe: {{ delivery_option.delivery_timeframe }}</div>
+                            </div>
+                            <svg class="w-5 h-5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                    </label>
+                </li>
+                {% empty %}
+                <div>
+                    <div class="container">
+                        <p class="text-gray-500 dark:text-gray-400">Currently, There are no delivery options available. <a href="{% url 'App:all_products' %}" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Back to shop
+                            <svg class="w-4 h-4 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                            </svg>
+                            </a>
+                        </p>
+        
+                    </div>
+                </div>
+                {% endfor %}
+    
+            </ul>
+        </div>
+        <!-- Sub total -->
+        <div class="sticky top-10 h-full rounded-lg border bg-white p-6 mb-2 shadow-md md:mt-0 md:w-1/3">
+            <div class="mb-2 flex justify-between">
+                {% if cart.coupon %}
+                {% with code=cart.coupon.code discount=cart.coupon.discount %}
+                <p class="text-gray-700">New Subtotal</p>
+                <p class="text-gray-700">$ <span id="subtotal">{{ cart.get_subtotal_price_after_discount|floatformat:'2' }}</span></p>
+                {% endwith %}
+                {% else %}
+                <p class="text-gray-700">Subtotal</p>
+                <p class="text-gray-700">$ <span id="subtotal">{{ cart.get_subtotal_price }}</span></p>
+                {% endif %}
+            </div>
+            
+            <div class="flex justify-between">
+                <p class="text-gray-700">Shipping</p>
+                <p class="text-gray-700">$ <span id="delivery_price">{{ cart.get_delivery_price }}</span></p>
+            </div>
+            <hr class="my-4" />
+            <div class="flex justify-between">
+                <p class="text-lg font-medium">Total</p>
+                <div class="">
+                    <p class="mb-1 text-lg font-medium">$ <span id="total">{{ cart.get_total_price }}</span> USD</p>
+                </div>
+            </div>
+            <a href="{% url 'checkout:delivery_choices' %}">
+                
+                <a href="{% url 'checkout:delivery_address' %}">
+                    <button class="mt-6 w-full rounded-md bg-gray-500 py-1.5 font-medium text-gray-50 hover:bg-gray-600">Pay Securely</button>
+                </a>
+
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('input[type=radio][name=deliveryOption]').on('change', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "checkout:basket_update_delivery" %}',
+            data: {
+                delivery_option: $(this).val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post',
+            },
+            success: function (json) {
+                document.getElementById('total').innerHTML = json.total;
+                document.getElementById('delivery_price').innerHTML = json.delivery_price;
+            },
+            error: function (xhr, errmsg, err) {},
+        });
+    });
+</script>
+
+{% endblock content %}
