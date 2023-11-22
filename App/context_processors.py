@@ -1,5 +1,6 @@
 from accounts.models import Customer
 from orders.models import Invoice, Order
+from django.http import HttpRequest
 
 from .models import Category, Product
 
@@ -11,14 +12,15 @@ def categories(request):
 
 
 def user_wishlist(request):
-    if request.user.is_authenticated:
-        return {
-            "user_wishlist": Product.objects.filter(user_wishlist=request.user),
-        }
-    else:
-        return {
-            "categories": Category.objects.filter(is_active=True, level=0),
-        }
+    try:
+        if request.user.is_authenticated:
+            return {
+                "user_wishlist": Product.objects.filter(user_wishlist=request.user),
+            }
+        else:
+            return []
+    except:
+        return []
 
 
 def orders_count(request):

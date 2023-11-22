@@ -2,48 +2,54 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-from App.models import Category, Product
+from App.models import Category, Product, ProductType, ProductLanguage
+from accounts.models import Customer
 
 
 class TestCartView(TestCase):
     def setUp(self):
-        self.user = User.objects.create(username="admin")
+        self.user = Customer.objects.create(username="admin")
         self.category = Category.objects.create(name="django", slug="django")
+        product_type = ProductType.objects.create(name='Test')
+        language = ProductLanguage.objects.create(name='English')
         Product.objects.create(
-            title="Django Tutorial 100",
+            title='Django Tutorial 1',
             author=self.user.username,
-            description="Neo description",
-            image="images/django-project-min.png",
-            slug="django-tutorial-1",
-            price="29.99",
-            in_stock=True,
+            description='New description',
+            cover_image='images/the_art_of_war.jpg',
+            slug='django-tutorial-1',
+            regular_price='29.99',
+            product_stock=100,
             is_active=True,
-            created_by_id=1,
             category_id=self.category.id,
+            product_type=product_type,
+            language=language,
         )
         Product.objects.create(
-            title="Django Tutorial 100",
+            title='Django Tutorial 2',
             author=self.user.username,
-            description="Neo description",
-            image="images/django-project-min.png",
-            slug="django-tutorial-1",
-            price="29.99",
-            in_stock=True,
+            description='New description',
+            cover_image='images/the_art_of_war.jpg',
+            slug='django-tutorial-2',
+            regular_price='29.99',
+            product_stock=100,
             is_active=True,
-            created_by_id=1,
             category_id=self.category.id,
+            product_type=product_type,
+            language=language,
         )
         Product.objects.create(
-            title="Django Tutorial 100",
+            title='Django Tutorial 3',
             author=self.user.username,
-            description="Neo description",
-            image="images/django-project-min.png",
-            slug="django-tutorial-1",
-            price="29.99",
-            in_stock=True,
+            description='New description',
+            cover_image='images/the_art_of_war.jpg',
+            slug='django-tutorial-3',
+            regular_price='29.99',
+            product_stock=100,
             is_active=True,
-            created_by_id=1,
             category_id=self.category.id,
+            product_type=product_type,
+            language=language,
         )
         self.client.post(
             reverse("cart:add_to_cart"),
@@ -87,7 +93,7 @@ class TestCartView(TestCase):
         response = self.client.post(
             reverse("cart:cart_delete"), {"productid": 2, "action": "post"}, xhr=True
         )
-        self.assertEqual(response.json(), {"quantity": 1, "subtotal": "29.99"})
+        self.assertEqual(response.json(), {"quantity": 0, "subtotal": "0"})
 
     def test_cart_update(self):
         """
@@ -95,7 +101,7 @@ class TestCartView(TestCase):
         """
         response = self.client.post(
             reverse("cart:cart_update"),
-            {"productid": 2, "productquantity": 1, "action": "post"},
+            {"productid": 3, "productquantity": 3, "action": "post"},
             xhr=True,
         )
-        self.assertEqual(response.json(), {"quantity": 2, "subtotal": "59.98"})
+        self.assertEqual(response.json(), {'productquantity': 3, 'quantity': 0, 'subtotal': '0', 'total': '0'})

@@ -1,13 +1,13 @@
 from importlib import import_module
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import TestCase
 from django.test.client import Client, RequestFactory
 from django.urls import reverse
 
-from App.models import Category, Product
+from accounts.models import Customer
+from App.models import Category, Product, ProductType, ProductLanguage
 from App.views import all_products
 
 
@@ -16,22 +16,26 @@ class TestViewResponse(TestCase):
         self.client = Client()
         # self.factory = RequestFactory()
         self.category = Category.objects.create(name='django', slug='django')
-        self.user = User.objects.create(username='admin')
+        product_type = ProductType.objects.create(name='Test')
+        language = ProductLanguage.objects.create(name='English')
+        self.user = Customer.objects.create(username='admin')
         self.data1 = Product.objects.create(
             title='Django Tutorial 1',
             author=self.user.username,
             description='New description',
-            image='images/django-project-min.png',
-            slug='django-tutorial-1', price='29.99',
-            in_stock=True,
+            cover_image='images/the_art_of_war.jpg',
+            slug='django-tutorial-1',
+            regular_price='29.99',
+            product_stock=100,
             is_active=True,
-            created_by_id=1,
-            category_id=self.category.id
+            category_id=self.category.id,
+            product_type=product_type,
+            language=language,
         )
 
     def test_url_allowed_hosts(self):
         ''' Test Allowed Hosts '''
-        response = self.client.get('/', HTTP_HOST='127.0.0.1')
+        response = self.client.get('/shop/', HTTP_HOST='127.0.0.1')
         self.assertEqual(response.status_code, 200)
 
     def test_product_detail_url(self):
@@ -50,7 +54,7 @@ class TestViewResponse(TestCase):
         request.session = engine.SessionStore()
         response = all_products(request)
         html = response.content.decode('utf8')
-        self.assertTrue(html.startswith('\n<!DOCTYPE html>\n'))
+        self.assertTrue(html.startswith('\n\n<!DOCTYPE html>\n'))
         self.assertEqual(response.status_code, 200)
 
     # def test_view_function(self):

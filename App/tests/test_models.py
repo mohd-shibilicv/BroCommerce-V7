@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from App.models import Category, Product
+from App.models import Category, Product, ProductType, ProductLanguage
+from accounts.models import Customer
 
 
 class TestCategoriesModel (TestCase):
@@ -27,17 +28,21 @@ class TestProductsModel(TestCase):
 
     def setUp(self):
         category = Category.objects.create(name='django', slug='django')
-        user = User.objects.create(username='admin')
+        product_type = ProductType.objects.create(name='Test')
+        language = ProductLanguage.objects.create(name='English')
+        user = Customer.objects.create(username='admin')
         self.data1 = Product.objects.create(
             title='Django Tutorial 1',
             author=user.username,
             description='New description',
-            image='images/django-project-min.png',
-            slug='django-tutorial-1', price='29.99',
-            in_stock=True,
+            cover_image='images/the_art_of_war.jpg',
+            slug='django-tutorial-1',
+            regular_price='29.99',
+            product_stock=100,
             is_active=True,
-            created_by_id=1,
-            category_id=category.id
+            category_id=category.id,
+            product_type=product_type,
+            language=language,
         )
 
     def test_product_model_entry(self):
