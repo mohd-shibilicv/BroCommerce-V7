@@ -1,13 +1,8 @@
-import environ
-import os
 from pathlib import Path
 
 import django
-from django.utils.encoding import force_str
 
-env = environ.Env(
-    DEBUG=(bool, False)
-)
+from django.utils.encoding import force_str
 
 from brocommerce import jazzmin
 
@@ -15,11 +10,19 @@ django.utils.encoding.force_text = force_str
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-JAZZMIN_SETTINGS = jazzmin.JAZZMIN_SETTINGS
 
-READ_DOT_ENV_FILE = env.bool('READ_DOT_ENV_FILE', default=False)
-if READ_DOT_ENV_FILE:
-    environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+import os
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, 'brocommerce/settings/.env'))
+
+JAZZMIN_SETTINGS = jazzmin.JAZZMIN_SETTINGS
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
@@ -27,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
@@ -143,8 +146,8 @@ SOCIALACCOUNT_PROVIDERS = {
     },
     "github": {
         "APP": {
-            "client_id": env('GITHUB_CLIENT_ID'),
-            "secret": env('GITHUB_CLIENT_SECRET'),
+            "client_id": str(os.getenv('GITHUB_CLIENT_ID')),
+            "secret": str(os.getenv('GITHUB_CLIENT_SECRET')),
         },
     },
 }

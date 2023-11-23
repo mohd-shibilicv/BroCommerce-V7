@@ -1,4 +1,4 @@
-from .main_settings import DEBUG, INSTALLED_APPS, MIDDLEWARE
+from .main_settings import *
 
 if DEBUG:
     INTERNAL_IPS = ("127.0.0.1",)
