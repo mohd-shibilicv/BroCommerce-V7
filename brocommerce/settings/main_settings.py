@@ -1,10 +1,10 @@
+import environ
 import os
 from pathlib import Path
 
 import django
 from django.utils.encoding import force_str
 
-import environ
 env = environ.Env(
     DEBUG=(bool, False)
 )
@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "django.contrib.sites",
+
     "shopadmin.apps.ShopadminConfig",
     "App.apps.AppConfig",
     "App_cart.apps.AppCartConfig",
@@ -53,6 +55,7 @@ INSTALLED_APPS = [
     "home.apps.HomeConfig",
     "checkout.apps.CheckoutConfig",
     "wallet.apps.WalletConfig",
+    
     "tailwind",
     "theme",
     "mptt",
@@ -133,15 +136,15 @@ DATABASES = {
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": "500916015274-24ecc6p8ut8p6uueho8rb2l0h3kng6ai.apps.googleusercontent.com",
-            "secret": "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",
+            "client_id": env('GOOGLE_CLIENT_ID'),
+            "secret": env('GOOGLE_CLIENT_SECRET'),
             "key": "",
         },
     },
     "github": {
         "APP": {
-            "client_id": "f373ec087ed6db05f79e",
-            "secret": "49eda33f7a01e3053e19e47a5910abf8325cfa3d",
+            "client_id": env('GITHUB_CLIENT_ID'),
+            "secret": env('GITHUB_CLIENT_SECRET'),
         },
     },
 }
@@ -177,7 +180,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
