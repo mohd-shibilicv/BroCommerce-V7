@@ -1,12 +1,17 @@
 import debug_toolbar
+import environ
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+env = environ.Env()
+environ.Env.read_env()
+
 urlpatterns = [
     path("", include("django.contrib.auth.urls")),
-    path("admin/", admin.site.urls),
+    path(env("SECRET_ADMIN_URL") + "/admin/", admin.site.urls),
     path("shopadmin/", include("shopadmin.urls", namespace="shopadmin")),
     path("__debug__/", include(debug_toolbar.urls)),
     path("", include("home.urls", namespace="home")),
