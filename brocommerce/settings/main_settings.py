@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
+
+    "whitenoise.runserver_nostatic",
+
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
@@ -92,6 +95,7 @@ NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -202,15 +206,24 @@ BASKET_SESSION_ID = "session_key"
 # Custom User Model
 AUTH_USER_MODEL = "accounts.Customer"
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = True
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "mohshibilicv@gmail.com"
-EMAIL_HOST_PASSWORD = "ypkjettmaqvczfkg"
-EMAIL_PORT = 587
+EMAIL_BACKEND = env("EMAIL_BACKEND")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = env("EMAIL_PORT")
 
 JAZZMIN_SETTINGS = jazzmin.JAZZMIN_SETTINGS
 JAZZMIN_UI_TWEAKS = jazzmin.JAZZMIN_UI_TWEAKS
 
 PAYPAL_RECEIVER_EMAIL = "sb-5zcdq27787995@business.example.com"
 PAYPAL_TEST = True
+
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_SIGNATURE_NAME = env("AWS_S3_SIGNATURE_NAME")
+AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME")
+AWS_S3_FILE_OVERWRITE = env("AWS_S3_FILE_OVERWRITE")
+AWS_DEFAULT_ACL = env("AWS_DEFAULT_ACL")
+AWS_S3_VERITY = env("AWS_S3_VERITY")

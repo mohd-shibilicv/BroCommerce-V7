@@ -1,13 +1,23 @@
 import debug_toolbar
 import environ
+import os
 
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-env = environ.Env()
-environ.Env.read_env()
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, 'brocommerce/settings/.env'))
 
 urlpatterns = [
     path("", include("django.contrib.auth.urls")),

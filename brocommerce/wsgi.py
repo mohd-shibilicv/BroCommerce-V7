@@ -1,4 +1,12 @@
 import os
+import environ
+
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, 'brocommerce/settings/.env'))
 
 from django.core.wsgi import get_wsgi_application
 
