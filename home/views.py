@@ -7,7 +7,10 @@ def home(request):
     offer_product = Product.objects.get(slug="the-art-of-war-deluxe-edition")
     first_products = Product.objects.filter(is_active=True)[0:4]
     second_products = Product.objects.filter(is_active=True)[4:8]
-    category_offer = CategoryOffers.objects.get(category=offer_product.category)
+    try:
+        category_offer = CategoryOffers.objects.get(category=offer_product.category)
+    except CategoryOffers.DoesNotExist:
+        pass
 
     return render(
         request,
