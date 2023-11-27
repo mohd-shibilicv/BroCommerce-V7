@@ -1,7 +1,7 @@
-import os
 from pathlib import Path
 
 import django
+
 from django.utils.encoding import force_str
 
 from brocommerce import jazzmin
@@ -10,13 +10,27 @@ django.utils.encoding.force_text = force_str
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+
+import os
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, 'brocommerce/settings/.env'))
+
 JAZZMIN_SETTINGS = jazzmin.JAZZMIN_SETTINGS
 
-SECRET_KEY = "django-insecure-1n1j0to@nm!9r5tso!xbbg$9ec+a$tz=os85ps4cfl80&q+3%v"
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
@@ -31,7 +45,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "django.contrib.sites",
+
     "shopadmin.apps.ShopadminConfig",
     "App.apps.AppConfig",
     "App_cart.apps.AppCartConfig",
@@ -42,6 +58,7 @@ INSTALLED_APPS = [
     "home.apps.HomeConfig",
     "checkout.apps.CheckoutConfig",
     "wallet.apps.WalletConfig",
+    
     "tailwind",
     "theme",
     "mptt",
@@ -110,27 +127,27 @@ WSGI_APPLICATION = "brocommerce.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "BroCommerce_V7",
-        "USER": "BroCommerce_V7",
-        "PASSWORD": "brocommercev7",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "ENGINE": "django.db.backends.postgresql",
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": "500916015274-24ecc6p8ut8p6uueho8rb2l0h3kng6ai.apps.googleusercontent.com",
-            "secret": "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",
+            "client_id": env('GOOGLE_CLIENT_ID'),
+            "secret": env('GOOGLE_CLIENT_SECRET'),
             "key": "",
         },
     },
     "github": {
         "APP": {
-            "client_id": "f373ec087ed6db05f79e",
-            "secret": "49eda33f7a01e3053e19e47a5910abf8325cfa3d",
+            "client_id": str(os.getenv('GITHUB_CLIENT_ID')),
+            "secret": str(os.getenv('GITHUB_CLIENT_SECRET')),
         },
     },
 }
@@ -166,7 +183,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
