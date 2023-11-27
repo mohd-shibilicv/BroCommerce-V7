@@ -2,7 +2,14 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import environ
 
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, 'brocommerce/settings/.env'))
 
 def main():
     """Run administrative tasks."""
