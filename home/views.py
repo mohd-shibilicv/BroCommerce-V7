@@ -10,7 +10,7 @@ def home(request):
     try:
         category_offer = CategoryOffers.objects.get(category=offer_product.category)
     except CategoryOffers.DoesNotExist:
-        pass
+        category_offer = None
 
     return render(
         request,

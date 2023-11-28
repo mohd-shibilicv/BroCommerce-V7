@@ -97,13 +97,9 @@ BroCommerce
             {% endif %}
             {% endif %}
             <a href="{{ product.get_absolute_url }}">
-                {% for image in product.product_image.all %}
-                {% if image.is_feature %}
                 <div style="max-width: 300px; max-height: 300px;" class="relative flex items-end overflow-hidden rounded-xl">
-                    <img class="object-cover" src="{{ product.cover_image.url }}" alt="{{ image.image.alt_text }}" />
+                    <img class="object-cover" src="{{ product.cover_image.url }}" alt="{{ product.cover_image.url }}" />
                 </div>
-                {% endif %}
-                {% endfor %}
 
                 <div class="mt-1 p-2">
                     <h2 class="text-slate-700">{{ product.title }}</h2>
