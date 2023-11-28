@@ -1,0 +1,50 @@
+version: 0.1
+
+environment_variables:
+  plaintext:
+    SECRET_KEY: "django-insecure-1n1j0to@nm!9r5tso!xbbg$9ec+a$tz=os85ps4cfl80&q+3%v"
+    DEBUG: True
+    SECRET_ADMIN_URL: "brocommerce"
+    DB_NAME: "brocommercedb"
+    DB_USER: "brocommercesuper"
+    DB_PASSWORD: "brocommerceshibilicv"
+    DB_HOST: "brocommercedb.crjba1wh2thv.eu-north-1.rds.amazonaws.com"
+    DB_PORT: "5432"
+    EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_USE_TLS: True
+    EMAIL_HOST: "smtp.gmail.com"
+    EMAIL_HOST_USER: "mohshibilicv@gmail.com"
+    EMAIL_HOST_PASSWORD: "ypkjettmaqvczfkg"
+    EMAIL_PORT: "587"
+    AWS_ACCESS_KEY_ID: "AKIAX4OMMRXDIRXVXPGF"
+    AWS_SECRET_ACCESS_KEY: "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"
+    AWS_STORAGE_BUCKET_NAME: "brocommercebucket"
+    AWS_S3_SIGNATURE_NAME: "s3v4"
+    AWS_S3_REGION_NAME: "eu-north-1"
+    AWS_S3_FILE_OVERWRITE: True
+    AWS_DEFAULT_ACL: "public-read"
+    AWS_S3_VERITY: True
+    DEFAULT_FILE_STORAGE: "storages.backends.s3boto3.S3Boto3Storage"
+    AWS_S3_CUSTOM_DOMAIN: "dudh952x0xj54.cloudfront.net"
+    AWS_CLOUDFRONT_KEY_ID: "KY95910V3P41R"
+    AWS_CLOUDFRONT_KEY: "-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEAi5jxj46GTgy5ZbOPekSuCucZZozqxFYE3KrQNO9cEWXZQurO\nkG5b7ZjBNWFeTJys1FPuq91s8112ITp4K5XZqY+DANb9tNlbbzP4Jk0uajmf46dA\nPjpHKTx4lob+tPWQFwuGVkpHOkEmTYAUgoUdlNWXBjjlv0VHyxc3qs5Ms0wK/sfh\nkFtPOdEtl7st7hfDcGcWMHqLVSoXZbcGS3y94jRTJJx3kRVSu4nAOmn7UGEAI10k\nnjrBfeS8xCP8lkTnZDF2XmJRtri482PiQSIcj4wF4nNiMAqkAEOYwekvwipRT4jp\nzIPmy+jh98SrUY+bR9Ws9zXN/5Mby5uLlw88UwIDAQABAoIBAEe/JLAGrYphycu2\nfNB3igf6fLiTRnoAR+FuPTJnrycV9JMLAX2D6uVztCGOWJwBjmZWeP2GAWAXMgaj\n+W1VSBh4tPjyhlSzveWqjSiKVIet9DpaFI+m/jn4ZXXgDfrNlu/xMWsaI/+RynDc\nmi324pxDJqrBBXvHzL1ZwnecLhmcAU26BFHgypLjlAwyeHV+GSZ8Xf2JUH7PGOvY\nn6u2CwzdsoZigkQxeRBZ/fNLfTr3yvPpfwYErSwibQk4ye16/8/r7w85jlv8jBuQ\nLZng1WAt/FCSVVuVuwAoui9D0Pia3UBANSk0kmveJn9DOE6vG3sYkVWIxt81C4U2\nYdP0hXkCgYEA0dLHAUE/22WK1NykTo3sRrmgLVCj2fHE30GApEqMEfAJ4erGZrzJ\nzgoF71xYY5xgy1FX4nPzBZtQU1VxBTJzgv21HeClUhGknb1OymhIF+jPTwai8I9+\ndrJpzB0PAHMaT7WPSOHvtp2SNmh3UgpDtpCl7obIlJHeo2Osb4GsJS0CgYEAqlG2\nqrKOU8A5X5h3VnzH2a0TOl1/zm2PX1oIjo3ORk7mDVPKdnhRhzfRo/Cn2JNZkDdG\ni5hXkFg0YY+rn5T4Loe7MzfdQeCJQ4eld3kpMDNmeGFSxCqujmApcpiR+vxATp05\ne6JDqJa7R6DUnTPvdxpW2/cn5i7QNqGbCvMw138CgYAle/5JXxrFWzKeLHy9++TG\nDctrzQg4m1SMfes5bofvfG6HiaXAHOIAiRHeXST9RqaULAgDUKuNyN1kxdLXFthE\nAocku0lNjBFYjMVSq6aVfuXqPElHqJrzIZR8/oP7lJSSwODEKHjmqufACJGoemT2\nbIj4P+P9hsG7dscLdKMIUQKBgQCRVYbs486FcsrCYwS6PWH/witdK3mquVyVPet9\nUU4KOrsd9jkWnJbdLmlqXimrqhjL8g71gXp+xnV0JreJRgH9Gn9INkxMMYCPqkks\nyKu34LR41ntcvxsSjMXxbnVq2SM6sfjiIdVgH7cRaRDkT/PwCv7BVoaqaZnsdDwr\nvNcZmwKBgHZoZrUVFenr4fCi5e9VJnhrmUIvwnje8QnONZWK6Dzi1sEvXN7dYtfn\nqzL6WpOYumuodhvpp7yVuo5WsUS4fHAMo/3fs3Vwrf+fjtj9UdBT4IvLJxD7aesc\nNQl0FUG/iVJ9p8oF4UumTlslBwy1n1T3UzAiTjpCnE1ZooUM26Wu\n-----END RSA PRIVATE KEY-----"
+    GOOGLE_CLIENT_ID: "500916015274-24ecc6p8ut8p6uueho8rb2l0h3kng6ai.apps.googleusercontent.com"
+    GOOGLE_CLIENT_SECRET: "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"
+    GITHUB_CLIENT_ID: "f373ec087ed6db05f79e"
+    GITHUB_CLIENT_SECRET: "49eda33f7a01e3053e19e47a5910abf8325cfa3d"
+
+
+phases:
+  pre_build:
+    commands:
+      - echo Prebuild ops
+      - pip3 install -r requirements.txt
+  build:
+    commands:
+      - echo Building the application 
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - '**/*'
