@@ -218,16 +218,6 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         super(Product, self).save(*args, **kwargs)
 
-        cover_image_resize = Image.open(self.cover_image.path)
-        width, height = cover_image_resize.size
-        if width > 300 and height > 300:
-            left = (width - 300) / 2
-            top = (height - 300) / 2
-            right = (width + 300) / 2
-            bottom = (height + 300) / 2
-            cover_image_cropped = cover_image_resize.crop((left, top, right, bottom))
-            cover_image_cropped.save(self.cover_image.path)
-
         product = get_object_or_404(Product, slug=self.slug)
 
         if not self.is_active:
