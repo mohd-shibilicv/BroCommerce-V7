@@ -1,0 +1,17 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/BroCommerce-V7
+ExecStart=/home/ubuntu/BroCommerce-V7/env/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          brocommerce.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
