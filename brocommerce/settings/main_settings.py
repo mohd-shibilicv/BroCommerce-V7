@@ -30,7 +30,9 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['brocommerce.shop', '13.53.112.69']
+
+CSRF_TRUSTED_ORIGINS = ['https://brocommerce.shop']
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
@@ -87,7 +89,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 
 INTERNAL_IPS = [
-    "127.0.0.1",
+    "13.53.112.69",
 ]
 
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
