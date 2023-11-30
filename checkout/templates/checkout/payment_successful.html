@@ -28,57 +28,35 @@ Delivery Address
     </ol>
     {% endblock breadcrumb %}
 </div>
-<!-- <div class="flex justify-center items-center h-screen">
-    <div class="bg-white border border-gray-200 rounded-lg shadow p-12 text-center dark:bg-gray-800 dark:border-gray-700">
-        <h5 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Payment Successful</h5>
-        <p class="text-gray-700 dark:text-gray-400 mb-4">Thank you for your payment. Your order has been successfully processed. You can view all your orders here</p>
-        <a href="{% url 'App:all_products' %}" class="bg-gray-200 hover:bg-gray-300 text-dark font-medium rounded-lg py-2 px-4 inline-flex items-center focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-200 dark:hover:bg-gray-300 dark:focus:ring-gray-600 mt-4">
-            Back
-        </a>
-        <a href="{% url 'account:user_orders' %}" class="bg-blue-700 hover:bg-blue-800 text-white font-medium rounded-lg py-2 px-4 inline-flex items-center focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Orders
-            <svg class="w-4 h-4 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-            </svg>
-        </a>
-    </div>
-</div> -->
 
-<div class="relative flex m-10 flex-col justify-center overflow-hidden bg-white py-6 sm:py-12">
-    <div class="mx-auto max-w-sm md:max-w-4xl rounded-3xl bg-violet-500 p-20 text-center rounded-xl">
-        <svg viewBox="0 0 24 24" class="text-green-600 w-20 h-20 mx-auto my-6">
-            <path fill="#fff"
-                d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
+<div class="relative flex flex-col justify-center overflow-hidden bg-white p-6 sm:p-12">
+    <div class="mx-auto max-w-4xl rounded-3xl bg-violet-500 p-8 sm:p-16 text-center rounded-xl">
+        <svg viewBox="0 0 24 24" class="text-green-600 w-12 h-12 mx-auto my-6 sm:w-20 sm:h-20">
+            <path fill="#fff" d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
             </path>
         </svg>
-        <h2 class="text-5xl font-bold leading-tight text-white">Payment Successful</h2>
-        <p class="mt-5 text-xl leading-8 text-white">Thank you for your payment. Your order has been successfully
-            processed.</p>
-        <div class="mt-6 flex items-center justify-center gap-4">
-            <a href="{% url 'account:user_orders' %}"
-                class="flex items-center justify-center gap-2 rounded-full border border-white/50 bg-white px-5 py-3 text-lg font-medium text-dark hover:bg-white hover:scale-105">
-                <span> View Orders</span>
+        <h2 class="text-2xl sm:text-5xl font-bold leading-tight text-white">Payment Successful</h2>
+        <p class="mt-3 text-base sm:text-xl leading-6 text-white">Thank you for your payment. Your order has been successfully processed.</p>
+        <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="{% url 'account:user_orders' %}" class="flex items-center justify-center gap-2 rounded-full border border-white/50 bg-white px-4 sm:px-5 py-2 sm:py-3 text-base sm:text-lg font-medium text-dark hover:bg-white hover:scale-105">
+                <span>View Orders</span>
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path
-                            d="M6.00156 13.4016L4.60156 12.0016L8.60156 8.00156L4.60156 4.00156L6.00156 2.60156L11.4016 8.00156L6.00156 13.4016Z"
-                            fill="#000" />
+                        <path d="M6.00156 13.4016L4.60156 12.0016L8.60156 8.00156L4.60156 4.00156L6.00156 2.60156L11.4016 8.00156L6.00156 13.4016Z" fill="#000" />
                     </svg>
                 </span>
             </a>
-            <a href="{% url 'account:dashboard' %}"
-                class="flex items-center justify-center gap-2 rounded-full border border-white/50 px-5 py-3 text-lg font-medium text-white hover:scale-105">
-                <span> Dashboard</span>
+            <a href="{% url 'account:dashboard' %}" class="mt-3 sm:mt-0 flex items-center justify-center gap-2 rounded-full border border-white/50 px-4 sm:px-5 py-2 sm:py-3 text-base sm:text-lg font-medium text-white hover:scale-105">
+                <span>Dashboard</span>
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path
-                            d="M6.00156 13.4016L4.60156 12.0016L8.60156 8.00156L4.60156 4.00156L6.00156 2.60156L11.4016 8.00156L6.00156 13.4016Z"
-                            fill="white" />
+                        <path d="M6.00156 13.4016L4.60156 12.0016L8.60156 8.00156L4.60156 4.00156L6.00156 2.60156L11.4016 8.00156L6.00156 13.4016Z" fill="white" />
                     </svg>
                 </span>
             </a>
         </div>
     </div>
 </div>
+
 
 {% endblock content %}
