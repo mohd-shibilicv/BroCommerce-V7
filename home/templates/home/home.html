@@ -50,18 +50,6 @@
                     <div class="swiper-slide">
                         <div class="item">
                             <div class="image object-cover">
-                                <img src="{% static 'images/ronaldo2.jpg' %}" alt="">
-                            </div>
-                            <div class="text-content flexcol">
-                                <h4>Sports</h4>
-                                <h2><span>Get It Now!</span><br><span>Fit Your Inspiration</span></h2>
-                                <a href="{% url 'App:product_details' slug='cristiano-ronaldo-the-ultimate-fan-book' %}" class="primary-button">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="item">
-                            <div class="image object-cover">
                                 <img src="{% static 'images/the art of war.jpg' %}" alt="">
                             </div>
                             <div class="text-content flexcol">
@@ -167,7 +155,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row products mini">
+                    <div class="row products mini mt-5">
                         
                         {% for product in first_products %}
                             

@@ -20,7 +20,7 @@ env = environ.Env(
 )
 
 # Take environment variables from .env file
-environ.Env.read_env(os.path.join(BASE_DIR, 'brocommerce/settings/.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, "brocommerce/settings/.env"))
 
 JAZZMIN_SETTINGS = jazzmin.JAZZMIN_SETTINGS
 
@@ -30,14 +30,9 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['brocommerce.shop', '13.53.112.69']
+ALLOWED_HOSTS = ['brocommerce.shop', '13.53.112.69', '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = ['https://brocommerce.shop']
-
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
 
 INSTALLED_APPS = [
     "jazzmin",
@@ -145,8 +140,8 @@ DATABASES = {
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": env('GOOGLE_CLIENT_ID'),
-            "secret": env('GOOGLE_CLIENT_SECRET'),
+            "client_id": str(os.getenv('GOOGLE_CLIENT_ID')),
+            "secret": str(os.getenv('GOOGLE_CLIENT_SECRET')),
             "key": "",
         },
     },
@@ -234,3 +229,8 @@ DEFAULT_FILE_STORAGE = env("DEFAULT_FILE_STORAGE")
 AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN")
 AWS_CLOUDFRONT_KEY_ID = env.str("AWS_CLOUDFRONT_KEY_ID").strip()
 AWS_CLOUDFRONT_KEY = env.str("AWS_CLOUDFRONT_KEY", multiline=True).encode('ascii').strip()
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]

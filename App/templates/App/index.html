@@ -23,7 +23,7 @@ BroCommerce
 
 <div class="container w-full flex items-center justify-between">
     <div class="container">
-        <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">Filter
+        <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch" class="hidden md:inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">Filter
             <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
             </svg>
@@ -38,9 +38,9 @@ BroCommerce
             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm m-5 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Filter</button>
         </form>
     </div>
-    <div class="container flex justify-end">
-        <form method="get" class="sorting-form flex gap-2 items-center justify-between -mt-5">
-            <label for="sort" class="">Sort by:</label>
+    <div class="container flex justify-end -mt-7">
+        <form method="get" class="sorting-form flex gap-2 items-center justify-between">
+            <label for="sort" class="hidden md:block">Sort by:</label>
             <div class="relative">
                 <select name="sort" id="sort" onchange="this.form.submit()"  id="products" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="default" {% if sort_param == 'default' %}selected{% endif %}>Default</option>

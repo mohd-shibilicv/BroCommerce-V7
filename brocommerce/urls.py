@@ -21,11 +21,11 @@ environ.Env.read_env(os.path.join(BASE_DIR, 'brocommerce/settings/.env'))
 
 urlpatterns = [
     path("", include("django.contrib.auth.urls")),
+    path("accounts/", include("allauth.urls")),
     path(env("SECRET_ADMIN_URL") + "/admin/", admin.site.urls),
     path("shopadmin/", include("shopadmin.urls", namespace="shopadmin")),
     path("__debug__/", include(debug_toolbar.urls)),
     path("", include("home.urls", namespace="home")),
-    path("accounts/", include("allauth.urls")),
     path("shop/", include("App.urls", namespace="App")),
     path("cart/", include("App_cart.urls", namespace="cart")),
     path("account/", include("accounts.urls", namespace="account")),

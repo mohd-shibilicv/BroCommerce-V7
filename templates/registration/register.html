@@ -17,11 +17,11 @@
     </ol>
     {% endblock breadcrumb %}
 </div>
-<div class="max-w-lg mx-auto mt-10 mb-10 pb-10">
+<div class="max-w-sm md:max-w-xl mx-auto mt-10 mb-10 pb-10">
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <div class="flex flex-col mt-7">    
+        <div class="flex flex-col mt-7">
             <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-600 px-3 py-2 rounded-xl text-white font-semibold">Signup</button>
             <br />
             <a href="{% url 'account:login' %}" class="text-center hover:text-indigo-600">Already have an account?</a>
@@ -45,4 +45,8 @@
     </div> -->
 
 </div>
+
+{% block footer %}
+{% endblock footer %}
+    
 {% endblock content %}

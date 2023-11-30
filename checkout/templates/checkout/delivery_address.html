@@ -28,7 +28,7 @@ Delivery Address
 <div class="bg-gray-100 pt-20 pb-10">
     {% block stepper %}
 
-    <ol class="relative w-full flex gap-10 justify-center mx-auto mb-5 text-gray-500 border-r border-gray-500 dark:border-gray-700 dark:text-gray-400">
+    <ol class="relative w-full hidden md:flex gap-10 justify-center mx-auto mb-5 text-gray-500 border-r border-gray-500 dark:border-gray-700 dark:text-gray-400">
         <li class="mb-10 ml-6 flex items-center">
             <span
                 class="relative flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
@@ -127,10 +127,10 @@ Delivery Address
                 </div>
             </div> 
   
-            <ul class="grid w-2/3 gap-6 md:grid-rows-3">
+            <ul class="grid w-full md:w-1/2 mb-5 gap-6 md:grid-rows-2">
                 
                 {% for address in addresses %}
-                <li data-index="{{ addressid }}" style="width: 700px;">
+                <li data-index="{{ addressid }}">
                     <input type="radio" id="{{ address.id }}" name="deliveryOption" {% if address.default %}checked{% endif %} value="{{ address.id }}" class="hidden peer"
                     required>
                     <label for="{{ address.id }}"

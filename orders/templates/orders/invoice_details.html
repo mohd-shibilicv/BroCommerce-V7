@@ -7,17 +7,20 @@ Invoice {{ invoice.invoice_number }}
 {% endblock title %}
 
 {% block content %}
-{% block breadcrumb %}
-<ol class="flex space-x-2 py-5 px-5">
-    <li><a href="{% url 'home:home' %}"
-            class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
-    <li><a href="{% url 'account:dashboard' %}"
-            class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Dashboard</a></li>
-    <li><a href="{% url 'orders:invoices' %}"
-            class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Invoices</a></li>
-    <li class="text-purple-700" aria-current="page"><a href=".">Invoice {{ invoice.invoice_number }}</a></li>
-</ol>
-{% endblock breadcrumb %}
+<div class="container">    
+    {% block breadcrumb %}
+    <ol class="flex space-x-2 py-5 px-5">
+        <li><a href="{% url 'home:home' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Home</a></li>
+        <li><a href="{% url 'account:dashboard' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Dashboard</a></li>
+        <li><a href="{% url 'orders:invoices' %}"
+                class="after:content-['/'] after:ml-2 text-gray-600 hover:text-purple-700">Invoices</a></li>
+        <li class="text-purple-700" aria-current="page"><a href=".">Invoice {{ invoice.invoice_number }}</a></li>
+    </ol>
+    {% endblock breadcrumb %}
+</div>
+
 <!-- component -->
 <div class="antialiased sans-serif min-h-screen bg-white" style="min-height: 900px">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>

@@ -689,7 +689,7 @@ form.search button:hover {
     left: 0;
     width: 350px;
     height: 300px;
-    background-color: var(--white-color);
+    /* background-color: var(--white-color); */
     z-index: 1;
     filter: blur(50px);
     opacity: 0.5;

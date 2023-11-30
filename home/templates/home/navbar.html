@@ -1,12 +1,11 @@
 {% load static %}
-<!-- Header Menu Center -->
-<header class="w-full mt-0 text-gray-700 bg-white border-t border-gray-100 shadow-sm body-font">
-    <div class="container flex flex-col items-start justify-between p-6 mx-auto md:flex-row">
+<header class="w-full mt-0 justify-center items-center text-gray-700 bg-white border-t border-gray-100 shadow-sm body-font">
+    <div class="container mx-auto flex flex-col items-center justify-between p-6 md:flex-row gap-10">
         <a href="{% url 'home:home' %}" class="flex items-center mb-4 gap-x-2 font-medium text-gray-900 text-lg title-font md:mb-0">
             <img src="{% static 'images/read-book-dark-icon.svg' %}" alt="LOGO">
             BroCommerce
         </a>
-        <nav class="flex flex-wrap items-center justify-center pl-24 text-base md:ml-auto md:mr-auto">
+        <nav class="flex flex-wrap items-center justify-center text-base md:ml-auto md:mr-auto">
             <a href="{% url 'home:home' %}" class="mr-5 p-2 font-medium rounded-xl transition ease-in-out delay-100 hover:text-gray-800 hover:bg-gray-100">Home</a>
             <a href="{% url 'home:about' %}" class="mr-5 p-2 font-medium rounded-xl transition ease-in-out delay-100 hover:text-gray-800 hover:bg-gray-100">About</a>
             <a href="{% url 'home:blog' %}" class="mr-5 p-2 font-medium rounded-xl transition ease-in-out delay-100 hover:text-gray-800 hover:bg-gray-100">Blog</a>
@@ -28,6 +27,5 @@
             </a>
         </div>
         {% endif %}
-
     </div>
 </header>

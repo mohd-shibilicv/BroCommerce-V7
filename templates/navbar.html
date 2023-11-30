@@ -95,11 +95,10 @@
                                         </div>
                                     </div>
                                 </li>
-                                <!-- <li><a href="#">Sports <div class="fly-item"><span>New</span></div></a></li> -->
                             </ul>
                         </nav>
                     </div>
-                    <form class="flex justify-end w-full" action="{% url 'App:search' %}" method="post">
+                    <form class="hidden md:flex justify-end w-full" action="{% url 'App:search' %}" method="post">
                         {% csrf_token %}
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -144,14 +143,13 @@
                                 </a></li>
                             {% endwith %}
                             {% if request.user.is_authenticated %}
-                            <a href="{% url 'account:dashboard' %}">
+                            <a class="hidden md:block" href="{% url 'account:dashboard' %}">
                                 <div class="mx-5">
                                     <img src="{{ request.user.profile.url }}" alt="Profile" class="rounded-full mx-auto" style="max-width: 50px; max-height: 50px;">
                                 </div>
                             </a>
                             {% endif %}
                         </ul>
-                            
                     </div>
                 </div>
             </div>

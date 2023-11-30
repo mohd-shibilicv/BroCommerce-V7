@@ -20,21 +20,23 @@
 </div>
 <section class="text-gray-700 body-font overflow-hidden bg-white p-10">
     <div class="container px-5 py-20 mx-auto">
-        <div class="lg:w-4/5 mx-auto flex">
-            <div class="flex flex-col p-2 gap-1">
-                {% for image in images %}
-                {% if not image.is_feature %}
-                <div class="image-link" href="{{ image.image.url }}" style="max-width: 100px; max-height: 100px;">
-                    <img alt="ecommerce" class="lg:w-1/2 w-full rounded-xl border border-gray-200"
-                        src="{{ image.image.url }}">
+        <div class="flex flex-col md:flex-row">
+            <div>
+                <div class="flex md:flex-col p-2 gap-1">
+                    {% for image in images %}
+                    {% if not image.is_feature %}
+                    <div class="image-link w-full" href="{{ image.image.url }}" style="max-width: 100px; max-height: 100px;">
+                        <img alt="ecommerce" class="lg:w-1/2 w-full rounded-xl border border-gray-200"
+                            src="{{ image.image.url }}">
+                    </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
-                {% endif %}
-                {% endfor %}
-            </div>
-            <div class="flex flex-col">
-                <div class="image-link" href="{{ images.0.image.url }}" style="max-width: 400px; max-height: 600px;">
-                    <img alt="ecommerce" class="lg:w-1/2 w-full drift-demo-trigger rounded-xl border border-gray-200"
-                        src="{{ images.0.image.url }}">
+                <div class="flex">
+                    <div class="image-link" href="{{ images.0.image.url }}" style="max-width: 400px; max-height: 600px;">
+                        <img alt="ecommerce" class="lg:w-1/2 w-full drift-demo-trigger rounded-xl border border-gray-200"
+                            src="{{ images.0.image.url }}">
+                    </div>
                 </div>
             </div>
 
@@ -113,8 +115,10 @@
                         {% if not product.discount_price %}
                         <span class="title-font font-medium text-3xl text-gray-900">${{ product.regular_price }}</span>
                         {% else %}
-                        <span class="title-font font-medium text-lg text-red-500" style="text-decoration: line-through;">${{ product.regular_price|floatformat:'2' }}</span>
-                        <p class="title-font font-medium text-3xl text-gray-900">${{ product.discount_price|floatformat:'2' }}</p>
+                        <div class="flex flex-col">
+                            <span class="title-font font-medium text-sm text-red-500" style="text-decoration: line-through;">${{ product.regular_price|floatformat:'2' }}</span>
+                            <p class="title-font font-medium text-2xl text-gray-900">${{ product.discount_price|floatformat:'2' }}</p>
+                        </div>
                         {% endif %}
                         
                         {% else %}
@@ -124,18 +128,18 @@
 
                     {% if product.product_stock <= 0 %} <a
                         href="{% url 'App:category_list' category_slug=product.category.slug %}"
-                        class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded">
+                        class="flex text-white bg-gray-500 border-0 p-3 focus:outline-none hover:bg-gray-600 rounded">
                         Find similar</a>
                     {% else %}
-                    <div class="w-full flex justify-end gap-3">
+                    <div class="w-full flex justify-end">
                         <button id="add-button" value="{{ product.id }}"
-                        class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded">Add to Cart</button>
+                        class="flex text-white text-md font-semibold bg-gray-500 border-0 p-5 focus:outline-none hover:bg-gray-600 rounded"><span class="hidden sm:block">Add to Cart</span><span class="block sm:hidden">Add</span></button>
                     </div>
 
                     {% if product in user_wishlist %}
                     <a href="{% url 'account:add_to_wishlist' product.id %}">
                         <button
-                            class="rounded-full w-10 h-10 shadow-xl bg-gray-100 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                            class="rounded-full w-10 h-10 shadow-xl bg-gray-100 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                             <svg fill="#ff0000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 class="w-5 h-5" viewBox="0 0 24 24">
                                 <path
@@ -147,7 +151,7 @@
                     {% else %}
                     <a href="{% url 'account:add_to_wishlist' product.id %}">
                         <button
-                            class="rounded-full w-10 shadow-md h-10 bg-gray-100 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                            class="rounded-full w-10 shadow-md h-10 bg-gray-100 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                             <svg fill="CurrentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 class="w-5 h-5" viewBox="0 0 24 24">
                                 <path
