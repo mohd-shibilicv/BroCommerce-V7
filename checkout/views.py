@@ -2,6 +2,7 @@ import json
 import secrets
 from decimal import Decimal
 
+from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
@@ -74,7 +75,7 @@ def delivery_address(request):
     session = request.session
     if "purchase" not in request.session:
         messages.error(request, "Please select a delivery option")
-        return HttpResponseRedirect(request.META["HTTP_REFERER"])
+        return redirect("checkout:delivery_choices")
 
     if request.method == "POST":
         form = UserAddressForm(request.POST)
