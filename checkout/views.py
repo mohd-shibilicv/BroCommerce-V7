@@ -115,7 +115,7 @@ def payment_selection(request):
     session = request.session
     if "address" not in request.session:
         messages.error(request, "Please select an address option")
-        return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+        return redirect("checkout:delivery_address")
 
     address = Address.objects.get(customer=request.user, default=True)
 
