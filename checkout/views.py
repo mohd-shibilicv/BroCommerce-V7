@@ -81,6 +81,7 @@ def delivery_address(request):
         if form.is_valid():
             address_form = form.save(commit=False)
             address_form.customer = request.user
+            addresses.default = True
             address_form.save()
             messages.success(request, "New address added")
             return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
@@ -88,12 +89,8 @@ def delivery_address(request):
         form = UserAddressForm()
 
     addresses = Address.objects.filter(customer=request.user).order_by("-default")
-    if addresses:
-        if addresses.count() == 1:
-            default_address = Address.objects.first()
-            default_address.default = True
-            default_address.save()
 
+    if addresses:
         if "address" not in request.session:
             session["address"] = {"address_id": str(addresses[0].id)}
         else:
