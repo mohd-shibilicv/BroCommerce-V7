@@ -29,9 +29,9 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['brocommerce.shop', '13.53.112.69', '127.0.0.1']
+ALLOWED_HOSTS = ['brocommerce.shop', '13.53.112.69', '127.0.0.1', 'brocommerce.up.railway.app']
 
-CSRF_TRUSTED_ORIGINS = ['https://brocommerce.shop']
+CSRF_TRUSTED_ORIGINS = ['https://brocommerce.shop', 'https://brocommerce.up.railway.app']
 
 INSTALLED_APPS = [
     "jazzmin",
@@ -85,6 +85,7 @@ CRISPY_TEMPLATE_PACK = "tailwind"
 INTERNAL_IPS = [
     "13.53.112.69",
     "127.0.0.1",
+    "brocommerce.up.railway.app",
 ]
 
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
