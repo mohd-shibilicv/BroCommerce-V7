@@ -125,7 +125,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "brocommerce.wsgi.application"
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
