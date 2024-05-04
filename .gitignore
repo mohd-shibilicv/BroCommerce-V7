@@ -84,7 +84,11 @@ target/
 *.log
 *.pot
 *.pyc
+*.exe
+.pyc
 __pycache__/
 
 .env
 db.sqlite3
+venv
+env

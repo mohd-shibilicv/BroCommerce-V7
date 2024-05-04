@@ -1,9 +1,8 @@
-from pathlib import Path
-
 import django
+import dj_database_url
 
+from pathlib import Path
 from django.utils.encoding import force_str
-
 from brocommerce import jazzmin
 
 django.utils.encoding.force_text = force_str
@@ -85,6 +84,7 @@ CRISPY_TEMPLATE_PACK = "tailwind"
 
 INTERNAL_IPS = [
     "13.53.112.69",
+    "127.0.0.1",
 ]
 
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
@@ -136,6 +136,9 @@ DATABASES = {
         'PORT': env('DB_PORT'),
     }
 }
+
+if not DEBUG:
+    DATABASES["default"] = dj_database_url.parse(env.str("DATABASE_URL"))
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
