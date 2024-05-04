@@ -24,29 +24,33 @@ environ.Env.read_env(os.path.join(BASE_DIR, "brocommerce/settings/.env"))
 JAZZMIN_SETTINGS = jazzmin.JAZZMIN_SETTINGS
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = ['brocommerce.shop', '13.53.112.69', '127.0.0.1', 'brocommerce.up.railway.app']
+ALLOWED_HOSTS = [
+    "brocommerce.shop",
+    "13.53.112.69",
+    "127.0.0.1",
+    "brocommerce.up.railway.app",
+]
 
-CSRF_TRUSTED_ORIGINS = ['https://brocommerce.shop', 'https://brocommerce.up.railway.app']
+CSRF_TRUSTED_ORIGINS = [
+    "https://brocommerce.shop",
+    "https://brocommerce.up.railway.app",
+]
 
 INSTALLED_APPS = [
     "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
-
     "whitenoise.runserver_nostatic",
-
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "django.contrib.sites",
-
     "shopadmin.apps.ShopadminConfig",
     "App.apps.AppConfig",
     "App_cart.apps.AppCartConfig",
@@ -57,7 +61,6 @@ INSTALLED_APPS = [
     "home.apps.HomeConfig",
     "checkout.apps.CheckoutConfig",
     "wallet.apps.WalletConfig",
-    
     "tailwind",
     "theme",
     "mptt",
@@ -128,12 +131,8 @@ WSGI_APPLICATION = "brocommerce.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
@@ -143,15 +142,15 @@ if not DEBUG:
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": str(os.getenv('GOOGLE_CLIENT_ID')),
-            "secret": str(os.getenv('GOOGLE_CLIENT_SECRET')),
+            "client_id": str(os.getenv("GOOGLE_CLIENT_ID")),
+            "secret": str(os.getenv("GOOGLE_CLIENT_SECRET")),
             "key": "",
         },
     },
     "github": {
         "APP": {
-            "client_id": str(os.getenv('GITHUB_CLIENT_ID')),
-            "secret": str(os.getenv('GITHUB_CLIENT_SECRET')),
+            "client_id": str(os.getenv("GITHUB_CLIENT_ID")),
+            "secret": str(os.getenv("GITHUB_CLIENT_SECRET")),
         },
     },
 }
@@ -219,19 +218,21 @@ JAZZMIN_UI_TWEAKS = jazzmin.JAZZMIN_UI_TWEAKS
 PAYPAL_RECEIVER_EMAIL = "sb-5zcdq27787995@business.example.com"
 PAYPAL_TEST = True
 
-AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_SIGNATURE_NAME = env("AWS_S3_SIGNATURE_NAME")
-AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME")
-AWS_S3_FILE_OVERWRITE = env("AWS_S3_FILE_OVERWRITE")
-AWS_DEFAULT_ACL = env("AWS_DEFAULT_ACL")
-AWS_S3_VERITY = env("AWS_S3_VERITY")
-DEFAULT_FILE_STORAGE = env("DEFAULT_FILE_STORAGE")
+# AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+# AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+# AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+# AWS_S3_SIGNATURE_NAME = env("AWS_S3_SIGNATURE_NAME")
+# AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME")
+# AWS_S3_FILE_OVERWRITE = env("AWS_S3_FILE_OVERWRITE")
+# AWS_DEFAULT_ACL = env("AWS_DEFAULT_ACL")
+# AWS_S3_VERITY = env("AWS_S3_VERITY")
+# DEFAULT_FILE_STORAGE = env("DEFAULT_FILE_STORAGE")
 
-AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN")
-AWS_CLOUDFRONT_KEY_ID = env.str("AWS_CLOUDFRONT_KEY_ID").strip()
-AWS_CLOUDFRONT_KEY = env.str("AWS_CLOUDFRONT_KEY", multiline=True).encode('ascii').strip()
+# AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN")
+# AWS_CLOUDFRONT_KEY_ID = env.str("AWS_CLOUDFRONT_KEY_ID").strip()
+# AWS_CLOUDFRONT_KEY = (
+#     env.str("AWS_CLOUDFRONT_KEY", multiline=True).encode("ascii").strip()
+# )
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
