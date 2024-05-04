@@ -16,7 +16,6 @@ from django.template.loader import get_template
 from django.urls import reverse
 from django.utils import timezone
 from PIL import Image
-from xhtml2pdf import pisa
 
 from accounts.models import Customer
 from App.models import (Category, CategoryOffers, Product, ProductImage,
@@ -197,13 +196,13 @@ def sales_report_download_pdf(request):
     # Create a PDF object, using the response object as its "file."
     template = get_template(template_path)
     html = template.render(context)
-    pisa_status = pisa.CreatePDF(html, dest=response)
+    # pisa_status = pisa.CreatePDF(html, dest=response)
 
-    # If the PDF creation failed, return an error response.
-    if pisa_status.err:
-        return HttpResponse(
-            "We had some errors with code %s <pre>%s</pre>" % (pisa_status.err, html)
-        )
+    # # If the PDF creation failed, return an error response.
+    # if pisa_status.err:
+    #     return HttpResponse(
+    #         "We had some errors with code %s <pre>%s</pre>" % (pisa_status.err, html)
+    #     )
 
     return response
 
