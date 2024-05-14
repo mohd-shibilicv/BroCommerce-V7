@@ -82,7 +82,7 @@ def delivery_address(request):
         if form.is_valid():
             address_form = form.save(commit=False)
             address_form.customer = request.user
-            addresses.default = True
+            address_form.default = True
             address_form.save()
             messages.success(request, "New address added")
             return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
