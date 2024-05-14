@@ -136,7 +136,7 @@ DATABASES = {
     }
 }
 
-if DEBUG:
+if not DEBUG:
     DATABASES["default"] = dj_database_url.parse(env.str("DATABASE_URL"))
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -219,27 +219,22 @@ JAZZMIN_UI_TWEAKS = jazzmin.JAZZMIN_UI_TWEAKS
 PAYPAL_RECEIVER_EMAIL = "sb-5zcdq27787995@business.example.com"
 PAYPAL_TEST = True
 
-# AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
-# AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
-# AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
-# AWS_S3_SIGNATURE_NAME = env("AWS_S3_SIGNATURE_NAME")
-# AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME")
-# AWS_S3_FILE_OVERWRITE = env("AWS_S3_FILE_OVERWRITE")
-# AWS_DEFAULT_ACL = env("AWS_DEFAULT_ACL")
-# AWS_S3_VERITY = env("AWS_S3_VERITY")
-# DEFAULT_FILE_STORAGE = env("DEFAULT_FILE_STORAGE")
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_SIGNATURE_NAME = env("AWS_S3_SIGNATURE_NAME")
+AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME")
+AWS_S3_FILE_OVERWRITE = env("AWS_S3_FILE_OVERWRITE")
+AWS_S3_VERITY = env("AWS_S3_VERITY")
+DEFAULT_FILE_STORAGE = env("DEFAULT_FILE_STORAGE")
 
-# AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN")
-# AWS_CLOUDFRONT_KEY_ID = env.str("AWS_CLOUDFRONT_KEY_ID").strip()
-# AWS_CLOUDFRONT_KEY = (
-#     env.str("AWS_CLOUDFRONT_KEY", multiline=True).encode("ascii").strip()
-# )
+AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN")
+AWS_CLOUDFRONT_KEY_ID = env.str("AWS_CLOUDFRONT_KEY_ID").strip()
+AWS_CLOUDFRONT_KEY = (
+    env.str("AWS_CLOUDFRONT_KEY", multiline=True).encode("ascii").strip()
+)
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
-]
-
-STATICFILES_IGNORE_PATTERNS = [
-    'vendor/bootswatch/default/bootstrap.min.css.map',  # Ignore the missing map file
 ]
