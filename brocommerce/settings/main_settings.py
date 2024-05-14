@@ -136,8 +136,7 @@ DATABASES = {
     }
 }
 
-if not DEBUG:
-    DATABASES["default"] = dj_database_url.parse(env.str("DATABASE_URL"))
+DATABASES["default"] = dj_database_url.parse(env.str("DATABASE_URL"))
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
