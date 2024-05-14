@@ -136,7 +136,7 @@ DATABASES = {
     }
 }
 
-if not DEBUG:
+if DEBUG:
     DATABASES["default"] = dj_database_url.parse(env.str("DATABASE_URL"))
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -186,6 +186,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
@@ -237,4 +238,8 @@ PAYPAL_TEST = True
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+STATICFILES_IGNORE_PATTERNS = [
+    'vendor/bootswatch/default/bootstrap.min.css.map',  # Ignore the missing map file
 ]

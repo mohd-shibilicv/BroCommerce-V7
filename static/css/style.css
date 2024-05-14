@@ -1113,19 +1113,6 @@ form.search button:hover {
     }
 
     /* Showing the first sub menu */
-    
-    .dpt-menu .beauty ul {
-        background-image: url(assets/menu/menu_bg1.jpg);
-    }
-    .dpt-menu .electronics ul {
-        background-image: url(assets/menu/menu_bg2.jpg);
-    }
-    .dpt-menu .fashion ul {
-        background-image: url(assets/menu/menu_bg3.jpg);
-    }
-    .dpt-menu .homekit .mega {
-        background-image: url(assets/menu/menu_bg4.jpg);
-    }
 
     .dpt-menu .has-child > :where(ul, .mega)::before {
         content: '';
