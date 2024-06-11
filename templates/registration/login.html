@@ -18,6 +18,11 @@
     {% endblock breadcrumb %}
 </div>
 <div class="max-w-xs md:max-w-xl mx-auto mt-12 mb-10">
+    <div class="w-full flex gap-2 flex-col p-3 bg-gray-900 mb-5 rounded">
+        <p class="text-white text-center text-xl">Test Credentials</p>
+        <p class="text-white text-center text-lg mt-2">User Email: <span class="px-3 py-2 bg-white text-black rounded-lg">user@brocommerce.com</span></p>
+        <p class="text-white text-center text-lg mt-2">User Password: <span class="px-3 py-2 bg-white text-black rounded-lg">Plo90plo90p!</span></p>
+    </div>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
